@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://d2sw4mc281tyu"]
+
+[node name="GameLoop" type="Node2D" unique_id=325727131]
