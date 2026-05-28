@@ -1,3 +1,21 @@
-# Godot 4+ specific ignores
+# Godot auto-generated folders (never commit)
 .godot/
-/android/
+
+# Import cache (regenerated automatically by each team member's editor)
+*.import
+
+# Export artifacts (build outputs)
+/build/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs and temp
+*.log
+*.tmp
+*.bak
+
+# Editor lock file
+*.lock
