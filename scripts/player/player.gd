@@ -14,7 +14,7 @@ signal player_exhausted(is_exhausted: bool)
 @export var max_stamina: float = 100.0
 @export var sprint_drain_rate: float = 28.0
 @export var stamina_regen_rate: float = 14.0
-@export var min_stamina_to_sprint: float = 5.0
+@export var min_stamina_to_sprint: float = 0.0
 
 # If true, stamina regenerates when the player is not sprinting.
 @export var regen_when_not_sprinting: bool = true
