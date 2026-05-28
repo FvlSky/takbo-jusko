@@ -6,11 +6,10 @@
 [node name="Main" type="Node2D" unique_id=414271349]
 
 [node name="TileMap" parent="." unique_id=826711819 instance=ExtResource("1_nha0i")]
-position = Vector2(1, 3)
+position = Vector2(1, 11)
 
 [node name="Player" parent="." unique_id=1804164808 instance=ExtResource("2_q24mn")]
 position = Vector2(-591, -570)
-speed = null
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=749154199]
 offset = Vector2(-335, -320)

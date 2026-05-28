@@ -6,6 +6,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_524rm"]
 size = Vector2(20, 35)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gfjak"]
+size = Vector2(20, 35.25)
+
 [node name="Player" type="CharacterBody2D" unique_id=1058196070]
 script = ExtResource("1_gfjak")
 
@@ -15,3 +18,9 @@ texture = ExtResource("2_4kuee")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=498232715]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_524rm")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=993628753]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=1469101926]
+position = Vector2(0, 0.375)
+shape = SubResource("RectangleShape2D_gfjak")
