@@ -5,11 +5,49 @@
 
 [node name="Main" type="Node2D" unique_id=414271349]
 
-[node name="TileMap" parent="." unique_id=826711819 instance=ExtResource("1_nha0i")]
-position = Vector2(1, 11)
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 
-[node name="Player" parent="." unique_id=1804164808 instance=ExtResource("2_q24mn")]
-position = Vector2(-591, -570)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=528380687]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=749154199]
-offset = Vector2(-335, -320)
+[node name="LeftHUD" type="MarginContainer" parent="CanvasLayer/HBoxContainer" unique_id=199401980]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer/LeftHUD" unique_id=1146866726]
+layout_mode = 2
+color = Color(0.10980392, 0.050980393, 0.10980392, 1)
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/HBoxContainer" unique_id=223425091]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment_horizontal = 0
+alignment_vertical = 0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer/AspectRatioContainer" unique_id=1857207520]
+layout_mode = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer" unique_id=1494126191]
+handle_input_locally = false
+physics_object_picking = true
+size = Vector2i(1272, 1272)
+render_target_update_mode = 4
+
+[node name="TileMap" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=826711819 instance=ExtResource("1_nha0i")]
+position = Vector2(1280, 1280)
+
+[node name="Player" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
+position = Vector2(20, 200)
+
+[node name="RightHUD" type="MarginContainer" parent="CanvasLayer/HBoxContainer" unique_id=582495747]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer/RightHUD" unique_id=114975692]
+layout_mode = 2
+color = Color(0.10980392, 0.050980393, 0.10980392, 1)

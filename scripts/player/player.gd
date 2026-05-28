@@ -28,7 +28,6 @@ var is_sprinting: bool = false
 var is_exhausted: bool = false
 var last_direction: Vector2 = Vector2.DOWN
 
-
 func _ready() -> void:
 	current_stamina = max_stamina
 	stamina_changed.emit(current_stamina, max_stamina)
@@ -40,7 +39,6 @@ func _physics_process(delta: float) -> void:
 	update_sprint_state(input_direction)
 	update_stamina(delta)
 	move_player(input_direction)
-
 
 # =========================
 # SCREEN-RELATIVE MOVEMENT
@@ -128,6 +126,7 @@ func update_exhausted_state() -> void:
 
 	if previous_exhausted != is_exhausted:
 		player_exhausted.emit(is_exhausted)
+		
 
 
 # ===================================
@@ -169,3 +168,5 @@ func reset_player_state(spawn_position: Vector2) -> void:
 	stamina_changed.emit(current_stamina, max_stamina)
 	sprint_state_changed.emit(is_sprinting)
 	player_exhausted.emit(is_exhausted)
+	
+	
