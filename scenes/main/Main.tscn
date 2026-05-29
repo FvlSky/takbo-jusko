@@ -2,8 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://b83nf8tqmucw6" path="res://scenes/map/TileMap.tscn" id="1_nha0i"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
+[ext_resource type="PackedScene" uid="uid://ii7y00nn8485" path="res://scenes/enemy/Dog.tscn" id="5_dc040"]
 
 [node name="Main" type="Node2D" unique_id=414271349]
+
+[node name="Dog" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1188703658 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
+position = Vector2(49, 100)
+player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 

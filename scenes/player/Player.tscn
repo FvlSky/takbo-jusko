@@ -306,7 +306,7 @@ height = 46.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_524rm"]
 size = Vector2(17, 33)
 
-[node name="Player" type="CharacterBody2D" unique_id=1058196070]
+[node name="Player" type="CharacterBody2D" unique_id=1058196070 groups=["player"]]
 script = ExtResource("1_gfjak")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1003898514]

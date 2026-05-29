@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://ii7y00nn8485"]
+
+[ext_resource type="Script" uid="uid://cx6fhu0halxri" path="res://scripts/enemy/dog.gd" id="1_ikqd0"]
+[ext_resource type="Texture2D" uid="uid://b5s0prbqnwvfp" path="res://assets/sprites/dog.png" id="1_nnkpo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikqd0"]
+size = Vector2(16, 16)
+
+[node name="Dog" type="CharacterBody2D" unique_id=1188703658]
+script = ExtResource("1_ikqd0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1909901361]
+texture = ExtResource("1_nnkpo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2055328375]
+shape = SubResource("RectangleShape2D_ikqd0")
