@@ -301,6 +301,7 @@ graph_offset = Vector2(71.549995, -18.862518)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kuee"]
 radius = 8.0
+height = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_524rm"]
 size = Vector2(17, 33)

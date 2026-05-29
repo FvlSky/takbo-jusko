@@ -57,7 +57,7 @@ func get_screen_relative_input() -> Vector2:
 		"move_left",
 		"move_right",
 		"move_up",
-        "move_down"
+		"move_down"
 	)
 	if input_direction != Vector2.ZERO:
 		last_direction = input_direction
