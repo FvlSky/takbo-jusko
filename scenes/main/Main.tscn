@@ -1,10 +1,71 @@
 [gd_scene format=3 uid="uid://30wocsumhj8i"]
 
+[ext_resource type="Script" uid="uid://b360bytw1n85d" path="res://scenes/main/main.gd" id="1_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://b83nf8tqmucw6" path="res://scenes/map/TileMap.tscn" id="1_nha0i"]
+[ext_resource type="Script" uid="uid://tesxhnj12wqw" path="res://scenes/main/map_pivot.gd" id="2_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
 [ext_resource type="PackedScene" uid="uid://ii7y00nn8485" path="res://scenes/enemy/Dog.tscn" id="5_dc040"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
+size = Vector2(9, 190.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tpxt"]
+size = Vector2(65.5, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjnkw"]
+size = Vector2(96, 12)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rikml"]
+a = Vector2(45.875, -24)
+b = Vector2(46, 6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsdfw"]
+size = Vector2(49.75, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tck0d"]
+size = Vector2(71.875, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u8lgh"]
+size = Vector2(71.875, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nha0i"]
+size = Vector2(9, 127)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gyg6b"]
+size = Vector2(9, 156.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ko0rf"]
+size = Vector2(9, 126)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ostsq"]
+size = Vector2(9, 190)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3km4f"]
+size = Vector2(9, 166.9375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dc040"]
+size = Vector2(9, 191.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1rhdn"]
+size = Vector2(9, 189.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjxhf"]
+size = Vector2(9, 94.9375)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_nha0i"]
+b = Vector2(0, 1280)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkm1d"]
+size = Vector2(9, 63.46875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vc03v"]
+size = Vector2(5.5, 190.375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fgu"]
+size = Vector2(9, 128.75)
+
 [node name="Main" type="Node2D" unique_id=414271349]
+script = ExtResource("1_gyg6b")
 
 [node name="Dog" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1188703658 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
 position = Vector2(49, 100)
@@ -25,34 +86,166 @@ layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer/LeftHUD" unique_id=1146866726]
 layout_mode = 2
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1697949345]
+offset_right = 1880.0
+offset_bottom = 1280.0
 color = Color(0.10980392, 0.050980393, 0.10980392, 1)
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/HBoxContainer" unique_id=223425091]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment_horizontal = 0
-alignment_vertical = 0
+[node name="MapPivot" type="Node2D" parent="." unique_id=11895498]
+position = Vector2(300, 0)
+script = ExtResource("2_gyg6b")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/HBoxContainer/AspectRatioContainer" unique_id=1857207520]
-layout_mode = 2
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MapPivot" unique_id=1857207520]
+offset_right = 1280.0
+offset_bottom = 1280.0
 stretch = true
+metadata/_edit_use_anchors_ = true
 
-[node name="SubViewport" type="SubViewport" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer" unique_id=1494126191]
+[node name="SubViewport" type="SubViewport" parent="MapPivot/SubViewportContainer" unique_id=1494126191]
 handle_input_locally = false
 physics_object_picking = true
-size = Vector2i(1272, 1272)
+size = Vector2i(1280, 1280)
 render_target_update_mode = 4
 
-[node name="TileMap" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=826711819 instance=ExtResource("1_nha0i")]
+[node name="TileMap" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=826711819 instance=ExtResource("1_nha0i")]
 position = Vector2(1280, 1280)
 
-[node name="Player" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
-position = Vector2(20, 200)
+[node name="CollisionShapes" type="StaticBody2D" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=2122158708]
 
-[node name="RightHUD" type="MarginContainer" parent="CanvasLayer/HBoxContainer" unique_id=582495747]
-custom_minimum_size = Vector2(300, 0)
-layout_mode = 2
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2094816385]
+position = Vector2(188, 318.75)
+shape = SubResource("RectangleShape2D_q24mn")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/HBoxContainer/RightHUD" unique_id=114975692]
-layout_mode = 2
-color = Color(0.10980392, 0.050980393, 0.10980392, 1)
+[node name="CollisionShape2D21" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=451408309]
+position = Vector2(43.25, 410)
+shape = SubResource("RectangleShape2D_2tpxt")
+
+[node name="CollisionShape2D22" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1904649941]
+position = Vector2(560.125, 538)
+shape = SubResource("RectangleShape2D_hjnkw")
+
+[node name="CollisionShape2D31" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=491967424]
+position = Vector2(560, 538)
+shape = SubResource("SegmentShape2D_rikml")
+
+[node name="CollisionShape2D32" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1663903084]
+position = Vector2(629, 537)
+shape = SubResource("SegmentShape2D_rikml")
+
+[node name="CollisionShape2D30" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=537667839]
+position = Vector2(721, 538)
+shape = SubResource("RectangleShape2D_hjnkw")
+
+[node name="CollisionShape2D23" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=131223481]
+position = Vector2(319, 634)
+shape = SubResource("RectangleShape2D_jsdfw")
+
+[node name="CollisionShape2D24" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1754211910]
+position = Vector2(421.75, 633)
+shape = SubResource("RectangleShape2D_jsdfw")
+
+[node name="CollisionShape2D25" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=70511174]
+position = Vector2(229.0625, 922)
+shape = SubResource("RectangleShape2D_tck0d")
+
+[node name="CollisionShape2D27" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1856490504]
+position = Vector2(743, 1177)
+shape = SubResource("RectangleShape2D_tck0d")
+
+[node name="CollisionShape2D26" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1076025557]
+position = Vector2(342, 922)
+shape = SubResource("RectangleShape2D_u8lgh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=137086551]
+position = Vector2(293.5, 64.5)
+shape = SubResource("RectangleShape2D_nha0i")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1130976566]
+position = Vector2(293, 560.75)
+shape = SubResource("RectangleShape2D_gyg6b")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=47901138]
+position = Vector2(69, 1120)
+shape = SubResource("RectangleShape2D_ko0rf")
+
+[node name="CollisionShape2D19" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1335869523]
+position = Vector2(197, 833)
+shape = SubResource("RectangleShape2D_ostsq")
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2027299936]
+position = Vector2(379, 1173.4688)
+shape = SubResource("RectangleShape2D_3km4f")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1161723216]
+position = Vector2(379, 832)
+shape = SubResource("RectangleShape2D_dc040")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2112509033]
+position = Vector2(454, 1089)
+shape = SubResource("RectangleShape2D_dc040")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1636087864]
+position = Vector2(635, 1087)
+shape = SubResource("RectangleShape2D_dc040")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1329314003]
+position = Vector2(1082, 1024.0625)
+shape = SubResource("RectangleShape2D_1rhdn")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=873439855]
+position = Vector2(1051, 1232.4688)
+shape = SubResource("RectangleShape2D_sjxhf")
+
+[node name="CollisionShape2D33" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=653961882]
+position = Vector2(902, 991)
+shape = SubResource("RectangleShape2D_sjxhf")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1353904270]
+position = Vector2(1157, 1232)
+shape = SubResource("RectangleShape2D_sjxhf")
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1090904247]
+position = Vector2(1272, 1)
+shape = SubResource("SegmentShape2D_nha0i")
+
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1826358791]
+position = Vector2(8, -2)
+shape = SubResource("SegmentShape2D_nha0i")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=336631443]
+position = Vector2(902, 703.2656)
+shape = SubResource("RectangleShape2D_qkm1d")
+
+[node name="CollisionShape2D16" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=642800016]
+position = Vector2(902, 831)
+shape = SubResource("RectangleShape2D_qkm1d")
+
+[node name="CollisionShape2D17" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=918256438]
+position = Vector2(1212, 705)
+shape = SubResource("RectangleShape2D_qkm1d")
+
+[node name="CollisionShape2D18" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1345160427]
+position = Vector2(1212, 832.7344)
+shape = SubResource("RectangleShape2D_qkm1d")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1373967359]
+position = Vector2(442, 560.625)
+shape = SubResource("RectangleShape2D_gyg6b")
+
+[node name="CollisionShape2D28" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1816781777]
+position = Vector2(515.25, 447.8125)
+shape = SubResource("RectangleShape2D_vc03v")
+
+[node name="CollisionShape2D29" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1833035318]
+position = Vector2(766, 448)
+shape = SubResource("RectangleShape2D_vc03v")
+
+[node name="CollisionShape2D20" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1666125942]
+position = Vector2(1083, 543.375)
+shape = SubResource("RectangleShape2D_p5fgu")
+
+[node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
+position = Vector2(82, 102)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
+visible = false
