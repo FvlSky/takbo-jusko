@@ -3223,6 +3223,7 @@ tile_map_data = PackedByteArray("AADY/9j/AQAAAAAAAADY/9n/AQAAAAEAAADY/9r/AQAAAAI
 tile_set = SubResource("TileSet_pce2p")
 
 [node name="ObstacleLayer" type="TileMapLayer" parent="." unique_id=391416188]
+visible = false
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1158126152]
 position = Vector2(-592, -576)
