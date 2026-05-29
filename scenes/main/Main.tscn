@@ -9,6 +9,13 @@ size = Vector2(9, 190.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2tpxt"]
 size = Vector2(65.5, 12)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjnkw"]
+size = Vector2(96, 12)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_rikml"]
+a = Vector2(45.875, -24)
+b = Vector2(46, 6)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsdfw"]
 size = Vector2(49.75, 12)
 
@@ -47,6 +54,9 @@ b = Vector2(0, 1280)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkm1d"]
 size = Vector2(9, 63.46875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vc03v"]
+size = Vector2(5.5, 190.375)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fgu"]
 size = Vector2(9, 128.75)
@@ -95,8 +105,20 @@ position = Vector2(43.25, 410)
 shape = SubResource("RectangleShape2D_2tpxt")
 
 [node name="CollisionShape2D22" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1904649941]
-position = Vector2(153, 410)
-shape = SubResource("RectangleShape2D_2tpxt")
+position = Vector2(560.125, 538)
+shape = SubResource("RectangleShape2D_hjnkw")
+
+[node name="CollisionShape2D31" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=491967424]
+position = Vector2(560, 538)
+shape = SubResource("SegmentShape2D_rikml")
+
+[node name="CollisionShape2D32" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1663903084]
+position = Vector2(629, 537)
+shape = SubResource("SegmentShape2D_rikml")
+
+[node name="CollisionShape2D30" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=537667839]
+position = Vector2(721, 538)
+shape = SubResource("RectangleShape2D_hjnkw")
 
 [node name="CollisionShape2D23" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=131223481]
 position = Vector2(319, 634)
@@ -189,6 +211,14 @@ shape = SubResource("RectangleShape2D_qkm1d")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1373967359]
 position = Vector2(442, 560.625)
 shape = SubResource("RectangleShape2D_gyg6b")
+
+[node name="CollisionShape2D28" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1816781777]
+position = Vector2(515.25, 447.8125)
+shape = SubResource("RectangleShape2D_vc03v")
+
+[node name="CollisionShape2D29" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1833035318]
+position = Vector2(766, 448)
+shape = SubResource("RectangleShape2D_vc03v")
 
 [node name="CollisionShape2D20" type="CollisionShape2D" parent="CanvasLayer/HBoxContainer/AspectRatioContainer/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1666125942]
 position = Vector2(1083, 543.375)
