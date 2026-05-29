@@ -40,6 +40,21 @@ func _physics_process(delta: float) -> void:
 	update_stamina(delta)
 	move_player(input_direction)
 
+	# 1. Get the player's input direction
+	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
+	# 2. Check if the player is actively moving
+	if input_dir != Vector2.ZERO:
+		# Update BOTH blend positions so the character faces the right way
+		$AnimationTree.set("parameters/Idle/blend_position", input_dir)
+		$AnimationTree.set("parameters/Run/blend_position", input_dir)
+		
+		# Tell the state machine to play the Walk animation
+		$AnimationTree.get("parameters/playback").travel("Run")
+		
+	else:
+		# If input_dir is ZERO (no keys pressed), play the Idle animation
+		$AnimationTree.get("parameters/playback").travel("Idle")
 # =========================
 # SCREEN-RELATIVE MOVEMENT
 # =========================
@@ -169,4 +184,5 @@ func reset_player_state(spawn_position: Vector2) -> void:
 	sprint_state_changed.emit(is_sprinting)
 	player_exhausted.emit(is_exhausted)
 	
+
 	
