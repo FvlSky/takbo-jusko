@@ -66,8 +66,13 @@ size = Vector2(9, 128.75)
 [node name="Main" type="Node2D" unique_id=414271349]
 script = ExtResource("1_gyg6b")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1697949345]
+offset_right = 1880.0
+offset_bottom = 1280.0
+color = Color(0.10980392, 0.050980393, 0.10980392, 1)
+
 [node name="MapPivot" type="Node2D" parent="." unique_id=11895498]
-position = Vector2(940, 640)
+position = Vector2(300, 0)
 script = ExtResource("2_gyg6b")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MapPivot" unique_id=1857207520]
@@ -171,6 +176,10 @@ shape = SubResource("RectangleShape2D_1rhdn")
 position = Vector2(1051, 1232.4688)
 shape = SubResource("RectangleShape2D_sjxhf")
 
+[node name="CollisionShape2D33" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=653961882]
+position = Vector2(902, 991)
+shape = SubResource("RectangleShape2D_sjxhf")
+
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1353904270]
 position = Vector2(1157, 1232)
 shape = SubResource("RectangleShape2D_sjxhf")
@@ -220,18 +229,3 @@ position = Vector2(82, 102)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 visible = false
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer" unique_id=528380687]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="CanvasLayer/HBoxContainer" unique_id=223425091]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-alignment_horizontal = 0
-alignment_vertical = 0
