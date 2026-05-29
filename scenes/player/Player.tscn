@@ -301,7 +301,6 @@ graph_offset = Vector2(71.549995, -18.862518)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4kuee"]
 radius = 8.0
-height = 46.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_524rm"]
 size = Vector2(17, 33)
@@ -328,7 +327,7 @@ vframes = 12
 frame = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=498232715]
-position = Vector2(0, 1)
+position = Vector2(0, 8)
 shape = SubResource("CapsuleShape2D_4kuee")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=993628753]
