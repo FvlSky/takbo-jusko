@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://b83nf8tqmucw6" path="res://scenes/map/TileMap.tscn" id="1_nha0i"]
 [ext_resource type="Script" uid="uid://tesxhnj12wqw" path="res://scenes/main/map_pivot.gd" id="2_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
+[ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -226,6 +227,10 @@ shape = SubResource("RectangleShape2D_p5fgu")
 
 [node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
 position = Vector2(82, 102)
+
+[node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
+position = Vector2(50, 100)
+player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 visible = false
