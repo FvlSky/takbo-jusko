@@ -315,7 +315,7 @@ libraries/ = SubResource("AnimationLibrary_npwbq")
 tree_root = SubResource("AnimationNodeStateMachine_7oing")
 advance_expression_base_node = NodePath("../AnimationPlayer")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Idle/blend_position = Vector2(-0.49077493, 0.16509438)
+parameters/Idle/blend_position = Vector2(0.0034083128, 0.67452836)
 parameters/Run/blend_position = Vector2(0.20172203, -0.3915094)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1975812648]
