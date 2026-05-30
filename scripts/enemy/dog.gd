@@ -28,16 +28,16 @@ class AStarNode:
 # ──────────────────────────────────────────────────────────────
 
 ## Movement speed of the dog in pixels per second.
-@export var move_speed       : float = 80.0
+@export var move_speed       : float = 160.0
 
 ## Predictive-targeting look-ahead coefficient (k).
 ## Formula: Target = Player_pos + (Player_direction × k × tile_size)
 ## Higher = dog tries to cut off the player further ahead.
-@export var lookahead_k      : float = 3.0
+@export var lookahead_k      : float = 5.0
 
 ## How often (in seconds) the dog recalculates its path.
 ## Lower = more responsive but more CPU work.
-@export var repath_interval  : float = 0.35
+@export var repath_interval  : float = 0.50
 
 ## Direct node references – drag and drop in the Inspector
 ## after you instance this scene into your Main scene.

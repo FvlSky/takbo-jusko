@@ -8,13 +8,13 @@ signal player_exhausted(is_exhausted: bool)
 # TUNING VALUES
 # -----------------------------
 
-@export var normal_speed: float = 190.0
-@export var sprint_speed: float = 310.0
+@export var normal_speed: float = 155.0
+@export var sprint_speed: float = 265.0
 
 @export var max_stamina: float = 100.0
-@export var sprint_drain_rate: float = 28.0
-@export var stamina_regen_rate: float = 14.0
-@export var min_stamina_to_sprint: float = 5.0  
+@export var sprint_drain_rate: float = 38.0
+@export var stamina_regen_rate: float = 9.0
+@export var min_stamina_to_sprint: float = 15.0  
 
 # If true, stamina regenerates when the player is not sprinting.
 @export var regen_when_not_sprinting: bool = true
