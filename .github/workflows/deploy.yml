@@ -8,7 +8,7 @@ on:
 env:
   GODOT_VERSION: 4.6.3
   EXPORT_NAME: takbo-jusko
-  ITCHIO_USERNAME: <your-itch-username> #TO BE FILLED WHEN READY FOR DEPLOYMENT
+  ITCHIO_USERNAME: FvlSky 
   ITCHIO_GAME: takbo-jusko
 
 jobs:
