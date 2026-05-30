@@ -9,27 +9,31 @@ extends Node2D
 @onready var win_screen: Control = $CanvasLayer/WinScreen
 @onready var overlay: ColorRect = $CanvasLayer/LoseScreen/Overlay
 @onready var start_screen = $CanvasLayer/StartScreen
-@onready var player_spawns: Node = $MapPivot/SubViewportContainer/SubViewport/PlayerSpawns
-@onready var enemy_spawns: Node  = $MapPivot/SubViewportContainer/SubViewport/EnemySpawns
 
 signal timer_updated(time_left: float, time_elapsed: float)
 
 @export var game_duration: float = 90.0
 @export var director_check_interval: float = 0.8
 
+const MIN_SPAWN_DISTANCE: float = 400.0
+
 var time_elapsed: float = 0.0
 var time_left: float = 90.0
 var director_timer: float = 0.0
 var game_over: bool = false
+var tilemap: TileMapLayer = null
 
 
 func _ready() -> void:
 	add_to_group("game_manager")
 
+	tilemap = get_tree().get_first_node_in_group("ground_layer")
+
 	print("map node: ", map)
 	print("director ai node: ", director_ai)
 	print("player node: ", player)
 	print("enemy node: ", enemy)
+	print("tilemap node: ", tilemap)
 	print("Timer started at: ", format_time(time_left))
 	print("chaos engine node: ", chaos_engine)
 	print("chaos engine script: ", chaos_engine.get_script())
@@ -46,9 +50,11 @@ func _ready() -> void:
 	if Global.skip_start_screen:
 		start_screen.visible = false
 		Global.skip_start_screen = false
-	
-	player.reset_player_state(_random_spawn(player_spawns))
-	enemy.global_position = _random_spawn(enemy_spawns)
+
+	# Randomize spawns from walkable tiles
+	var spawns := _get_random_spawns()
+	player.reset_player_state(spawns[0])
+	enemy.global_position = spawns[1]
 
 
 func _process(delta: float) -> void:
@@ -187,8 +193,53 @@ func format_time(seconds_left: float) -> String:
 	var seconds := total_seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
 
-func _random_spawn(parent: Node) -> Vector2:
-	var points := parent.get_children()
-	if points.is_empty():
-		return Vector2.ZERO
-	return points[randi() % points.size()].global_position
+
+# ──────────────────────────────────────────────────────────────
+#  SPAWN SYSTEM
+# ──────────────────────────────────────────────────────────────
+
+func _get_walkable_tiles() -> Array:
+	if tilemap == null:
+		print("ERROR: tilemap not found in group 'ground_layer'")
+		return []
+	var walkable := []
+	for cell in tilemap.get_used_cells():
+		var tile_data = tilemap.get_cell_tile_data(cell)
+		if tile_data and tile_data.get_custom_data("walkable"):
+			walkable.append(cell)
+	return walkable
+
+
+func _tile_to_world(tile: Vector2i) -> Vector2:
+	return tilemap.to_global(tilemap.map_to_local(tile))
+
+
+func _get_random_spawns() -> Array:
+	var walkable := _get_walkable_tiles()
+	if walkable.is_empty():
+		print("ERROR: No walkable tiles found — using fallback spawns")
+		return [Vector2(200, 200), Vector2(1000, 1000)]
+
+	walkable.shuffle()
+
+	var player_spawn := Vector2.ZERO
+	var enemy_spawn  := Vector2.ZERO
+
+	# Pick player spawn first
+	for tile in walkable:
+		player_spawn = _tile_to_world(tile)
+		break
+
+	# Pick enemy spawn far enough from player
+	for tile in walkable:
+		var candidate := _tile_to_world(tile)
+		if candidate.distance_to(player_spawn) >= MIN_SPAWN_DISTANCE:
+			enemy_spawn = candidate
+			break
+
+	# Fallback if no valid enemy spawn was found
+	if enemy_spawn == Vector2.ZERO:
+		print("WARN: No enemy spawn found at MIN_SPAWN_DISTANCE — using last walkable tile")
+		enemy_spawn = _tile_to_world(walkable.back())
+
+	return [player_spawn, enemy_spawn]
