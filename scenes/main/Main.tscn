@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 [ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
+[ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -238,16 +239,9 @@ player_node = NodePath("../Player")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 script = ExtResource("6_sjxhf")
 
-[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=1856935695]
-offset_left = 1651.0
-offset_top = 103.0
-offset_right = 1793.0
-offset_bottom = 161.0
-text = "PLAY"
-
-[node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=744201414]
-position = Vector2(154, 127)
-scale = Vector2(0.35526308, 0.3552631)
+[node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=73451924]
+position = Vector2(153, 122.99999)
+scale = Vector2(0.3574561, 0.35745612)
 texture = ExtResource("6_1rhdn")
 
 [node name="TimeFrame" type="Sprite2D" parent="CanvasLayer" unique_id=250193698]
@@ -268,5 +262,6 @@ text = "3:00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="CanvasLayer/PlayButton" to="CanvasLayer" method="_on_button_pressed"]
+[node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
+
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
