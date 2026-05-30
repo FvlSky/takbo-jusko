@@ -10,6 +10,15 @@
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 [ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
 [ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
+[ext_resource type="Texture2D" uid="uid://4oarkareoskn" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
+[ext_resource type="Texture2D" uid="uid://65eyxnyqjdal" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
+[ext_resource type="Texture2D" uid="uid://b2l4tft55ce4s" path="res://assets/ui/STAMINA_TEXT.png" id="12_p5fgu"]
+[ext_resource type="Texture2D" uid="uid://cie1rn8sfev7i" path="res://assets/ui/PAUSE_BUTTON.png" id="13_u8lgh"]
+[ext_resource type="Texture2D" uid="uid://bwjmdm5xjt8b2" path="res://assets/ui/RESTART_BUTTON.png" id="14_hjnkw"]
+[ext_resource type="Texture2D" uid="uid://dpuocqf73vxst" path="res://assets/ui/PAUSE_PRESSED.png" id="14_vc03v"]
+[ext_resource type="Texture2D" uid="uid://6wg5ewbw8rpo" path="res://assets/ui/QUIT_BUTTON.png" id="15_rikml"]
+[ext_resource type="Texture2D" uid="uid://d3kufap5dfmmg" path="res://assets/ui/RESTART_PRESSED.png" id="16_grv7h"]
+[ext_resource type="Texture2D" uid="uid://boh2gbkydd218" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -68,6 +77,10 @@ size = Vector2(5.5, 190.375)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fgu"]
 size = Vector2(9, 128.75)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkm1d"]
+atlas = ExtResource("11_qkm1d")
+region = Rect2(0, 0, 224, 32)
 
 [node name="Main" type="Node2D" unique_id=414271349]
 script = ExtResource("1_gyg6b")
@@ -235,13 +248,6 @@ shape = SubResource("RectangleShape2D_p5fgu")
 
 [node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
 position = Vector2(82, 102)
-normal_speed = null
-sprint_speed = null
-max_stamina = null
-sprint_drain_rate = null
-stamina_regen_rate = null
-min_stamina_to_sprint = null
-regen_when_not_sprinting = null
 
 [node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
 position = Vector2(830, 258)
@@ -272,6 +278,46 @@ theme_override_font_sizes/font_size = 42
 text = "3:00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Objective" type="Sprite2D" parent="CanvasLayer" unique_id=1445661654]
+position = Vector2(1729, 513)
+texture = ExtResource("10_2tpxt")
+
+[node name="Staminabar" type="TextureRect" parent="CanvasLayer" unique_id=800231113]
+offset_left = 41.0
+offset_top = 464.0
+offset_right = 2425.0
+offset_bottom = 496.0
+texture = SubResource("AtlasTexture_qkm1d")
+stretch_mode = 2
+
+[node name="StaminaText" type="Sprite2D" parent="CanvasLayer" unique_id=345343099]
+position = Vector2(112, 443)
+texture = ExtResource("12_p5fgu")
+
+[node name="PauseButton" type="TextureButton" parent="CanvasLayer" unique_id=870613883]
+offset_left = 1599.0
+offset_top = 42.0
+offset_right = 1856.0
+offset_bottom = 139.0
+texture_normal = ExtResource("13_u8lgh")
+texture_pressed = ExtResource("14_vc03v")
+
+[node name="RestartButton" type="TextureButton" parent="CanvasLayer" unique_id=595330857]
+offset_left = 1599.0
+offset_top = 163.0
+offset_right = 1856.0
+offset_bottom = 260.0
+texture_normal = ExtResource("14_hjnkw")
+texture_pressed = ExtResource("16_grv7h")
+
+[node name="QuitButton" type="TextureButton" parent="CanvasLayer" unique_id=40924826]
+offset_left = 1599.0
+offset_top = 283.0
+offset_right = 1856.0
+offset_bottom = 380.0
+texture_normal = ExtResource("15_rikml")
+texture_pressed = ExtResource("18_yub1f")
 
 [node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
 
