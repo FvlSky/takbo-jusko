@@ -245,7 +245,6 @@ texture = ExtResource("6_1rhdn")
 [node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1623620798]
 wait_time = 180.0
 one_shot = true
-autostart = true
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1353781582]
 offset_left = 115.0
@@ -256,4 +255,12 @@ theme_override_font_sizes/font_size = 42
 text = "3:00"
 horizontal_alignment = 1
 
+[node name="PlayButton" type="Button" parent="." unique_id=1856935695]
+offset_left = 1651.0
+offset_top = 103.0
+offset_right = 1793.0
+offset_bottom = 161.0
+text = "PLAY"
+
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
+[connection signal="pressed" from="PlayButton" to="CanvasLayer" method="_on_button_pressed"]
