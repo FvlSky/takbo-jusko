@@ -14,7 +14,7 @@ signal player_exhausted(is_exhausted: bool)
 @export var max_stamina: float = 100.0
 @export var sprint_drain_rate: float = 38.0
 @export var stamina_regen_rate: float = 9.0
-@export var min_stamina_to_sprint: float = 15.0  
+@export var min_stamina_to_sprint: float = 15.0
 
 # If true, stamina regenerates when the player is not sprinting.
 @export var regen_when_not_sprinting: bool = true
@@ -44,12 +44,94 @@ func _ready() -> void:
 	stamina_changed.emit(current_stamina, max_stamina)
 
 
+# ──────────────────────────────────────────────────────────────
+#  SPRINT STREAK TRACKING
+# ──────────────────────────────────────────────────────────────
+var _sprint_streak    : int   = 0
+var _was_sprinting    : bool  = false
+var _sprint_gap_timer : float = 0.0
+
+## Max gap (seconds) between two sprints that still counts as a streak.
+const _SPRINT_GAP_WINDOW : float = 0.75
+
+
+# ──────────────────────────────────────────────────────────────
+#  PANIC DETECTION
+#  Watches for rapid direction reversals in raw input.
+# ──────────────────────────────────────────────────────────────
+var _prev_input_dir   : Vector2 = Vector2.ZERO
+var _dir_change_times : Array   = []   # timestamps (seconds) of recent sharp turns
+
+## Rolling window (seconds) over which direction changes are counted.
+const _PANIC_WINDOW     : float = 2.0
+## Number of sharp turns within the window that triggers panic.
+const _PANIC_THRESHOLD  : int   = 3
+## Dot-product threshold below which a turn counts as "sharp".
+## 0.30 ≈ turns wider than ~72°.
+const _PANIC_TURN_DOT   : float = 0.30
+
+
+# ──────────────────────────────────────────────────────────────
+#  MAIN LOOP
+# ──────────────────────────────────────────────────────────────
 func _physics_process(delta: float) -> void:
 	var input_direction := get_screen_relative_input()
 
 	update_sprint_state(input_direction)
 	update_stamina(delta)
 	move_player(input_direction)
+
+	# ── Sprint streak ──────────────────────────────────────────
+	# is_sprinting is already set correctly by update_sprint_state()
+	# above — no need to re-read Input here.
+	if is_sprinting and not _was_sprinting:
+		# Rising edge: a new sprint started.
+		if _sprint_gap_timer <= _SPRINT_GAP_WINDOW:
+			_sprint_streak += 1   # within the gap window → extend streak
+		else:
+			_sprint_streak  = 1   # gap too long → fresh streak
+
+		_sprint_gap_timer = 0.0
+
+		# Notify the dog from the second sprint onwards.
+		if _sprint_streak >= 2:
+			_notify_dog("on_player_sprint_streak", [_sprint_streak])
+
+	if not is_sprinting:
+		_sprint_gap_timer += delta
+
+	_was_sprinting = is_sprinting
+
+	# ── Panic detection ────────────────────────────────────────
+	# Only compare directions when the player is actively moving.
+	if input_direction.length() > 0.1 and _prev_input_dir.length() > 0.1:
+		var dot := _prev_input_dir.dot(input_direction)
+		if dot < _PANIC_TURN_DOT:
+			var now := Time.get_ticks_msec() / 1000.0
+			_dir_change_times.append(now)
+
+			# Purge timestamps outside the rolling window.
+			_dir_change_times = _dir_change_times.filter(
+				func(t: float) -> bool: return (now - t) <= _PANIC_WINDOW
+			)
+
+			# Enough rapid turns → the player is panicking.
+			if _dir_change_times.size() >= _PANIC_THRESHOLD:
+				_notify_dog("on_player_panic", [])
+
+	# Only update _prev_input_dir when the player is actually moving,
+	# so brief stillness doesn't reset the directional baseline.
+	if input_direction.length() > 0.1:
+		_prev_input_dir = input_direction
+
+
+# ──────────────────────────────────────────────────────────────
+#  HELPER: notify the dog without crashing if the node is missing
+# ──────────────────────────────────────────────────────────────
+func _notify_dog(method: String, args: Array) -> void:
+	var dog = get_tree().get_first_node_in_group("dog")
+	if dog and dog.has_method(method):
+		dog.callv(method, args)
 
 
 # =========================
@@ -58,13 +140,12 @@ func _physics_process(delta: float) -> void:
 
 func get_screen_relative_input() -> Vector2:
 	# Screen-relative means:
-	# W / Up always moves the player upward on the screen.
-	# S / Down always moves the player downward on the screen.
-	# A / Left always moves the player left on the screen.
-	# D / Right always moves the player right on the screen.
+	# W / Up    → always moves the player upward on screen.
+	# S / Down  → always moves the player downward on screen.
+	# A / Left  → always moves the player left on screen.
+	# D / Right → always moves the player right on screen.
 	#
 	# We do not rotate this input based on map rotation.
-
 	var input_direction := Input.get_vector(
 		"move_left",
 		"move_right",
@@ -80,7 +161,6 @@ func get_screen_relative_input() -> Vector2:
 
 func move_player(input_direction: Vector2) -> void:
 	var current_speed := normal_speed
-
 	if is_sprinting:
 		current_speed = sprint_speed
 
@@ -93,8 +173,8 @@ func move_player(input_direction: Vector2) -> void:
 # ==============
 
 func update_sprint_state(input_direction: Vector2) -> void:
-	var is_moving := input_direction != Vector2.ZERO
-	var sprint_pressed := Input.is_action_pressed("sprint")
+	var is_moving          := input_direction != Vector2.ZERO
+	var sprint_pressed     := Input.is_action_pressed("sprint")
 	var has_enough_stamina := current_stamina > min_stamina_to_sprint
 
 	var previous_sprinting := is_sprinting
@@ -147,7 +227,6 @@ func update_exhausted_state() -> void:
 func get_stamina_ratio() -> float:
 	if max_stamina <= 0.0:
 		return 0.0
-
 	return current_stamina / max_stamina
 
 
@@ -169,12 +248,12 @@ func get_hitbox_node() -> Area2D:
 
 func reset_player_state(spawn_position: Vector2) -> void:
 	global_position = spawn_position
-	velocity = Vector2.ZERO
+	velocity        = Vector2.ZERO
 
 	current_stamina = max_stamina
-	is_sprinting = false
-	is_exhausted = false
-	last_direction = Vector2.DOWN
+	is_sprinting    = false
+	is_exhausted    = false
+	last_direction  = Vector2.DOWN
 
 	stamina_changed.emit(current_stamina, max_stamina)
 	sprint_state_changed.emit(is_sprinting)
