@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   export-web:
     name: Web Export
@@ -13,6 +16,9 @@ jobs:
     container:
       image: barichello/godot-ci:4.6.3
     steps:
+      - name: Fix git ownership
+        run: git config --global --add safe.directory '*'
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
