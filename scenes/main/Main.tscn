@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 [ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
+[ext_resource type="Script" uid="uid://cg2as1d06goyx" path="res://scenes/main/win_zone.gd" id="8_roob6"]
 [ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
 [ext_resource type="Texture2D" uid="uid://4oarkareoskn" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
 [ext_resource type="Texture2D" uid="uid://65eyxnyqjdal" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
@@ -21,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://d3kufap5dfmmg" path="res://assets/ui/RESTART_PRESSED.png" id="16_grv7h"]
 [ext_resource type="Texture2D" uid="uid://boh2gbkydd218" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
 [ext_resource type="Texture2D" uid="uid://cy586nn8mqjb1" path="res://assets/ui/Lose Pop Up.png" id="21_yub1f"]
+[ext_resource type="Texture2D" uid="uid://fg8g5003lpph" path="res://assets/ui/Win Pop Up.png" id="22_d8523"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -80,6 +82,9 @@ size = Vector2(5.5, 190.375)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fgu"]
 size = Vector2(9, 128.75)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_d8523"]
+radius = 49.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkm1d"]
 atlas = ExtResource("11_qkm1d")
 region = Rect2(0, 0, 224, 32)
@@ -120,15 +125,19 @@ position = Vector2(1280, 1280)
 [node name="CollisionShapes" type="StaticBody2D" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=2122158708]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2094816385]
-position = Vector2(188, 318.75)
+position = Vector2(195, 311.75)
 shape = SubResource("RectangleShape2D_q24mn")
 
 [node name="CollisionShape2D21" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=451408309]
-position = Vector2(43.25, 410)
+position = Vector2(50.25, 403)
+shape = SubResource("RectangleShape2D_2tpxt")
+
+[node name="CollisionShape2D34" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=584783472]
+position = Vector2(161, 402)
 shape = SubResource("RectangleShape2D_2tpxt")
 
 [node name="CollisionShape2D22" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1904649941]
-position = Vector2(560.125, 538)
+position = Vector2(567.125, 532)
 shape = SubResource("RectangleShape2D_hjnkw")
 
 [node name="CollisionShape2D31" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=491967424]
@@ -140,75 +149,75 @@ position = Vector2(629, 537)
 shape = SubResource("SegmentShape2D_rikml")
 
 [node name="CollisionShape2D30" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=537667839]
-position = Vector2(721, 538)
+position = Vector2(728, 532)
 shape = SubResource("RectangleShape2D_hjnkw")
 
 [node name="CollisionShape2D23" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=131223481]
-position = Vector2(319, 634)
+position = Vector2(327, 628)
 shape = SubResource("RectangleShape2D_jsdfw")
 
 [node name="CollisionShape2D24" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1754211910]
-position = Vector2(421.75, 633)
+position = Vector2(429.75, 627)
 shape = SubResource("RectangleShape2D_jsdfw")
 
 [node name="CollisionShape2D25" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=70511174]
-position = Vector2(229.0625, 922)
+position = Vector2(237.0625, 916)
 shape = SubResource("RectangleShape2D_tck0d")
 
 [node name="CollisionShape2D27" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1856490504]
-position = Vector2(743, 1177)
+position = Vector2(750, 1170)
 shape = SubResource("RectangleShape2D_tck0d")
 
 [node name="CollisionShape2D26" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1076025557]
-position = Vector2(342, 922)
+position = Vector2(350, 916)
 shape = SubResource("RectangleShape2D_u8lgh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=137086551]
-position = Vector2(293.5, 64.5)
+position = Vector2(300.5, 63.5)
 shape = SubResource("RectangleShape2D_nha0i")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1130976566]
-position = Vector2(293, 560.75)
+position = Vector2(301, 554.75)
 shape = SubResource("RectangleShape2D_gyg6b")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=47901138]
-position = Vector2(69, 1120)
+position = Vector2(77, 1116)
 shape = SubResource("RectangleShape2D_ko0rf")
 
 [node name="CollisionShape2D19" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1335869523]
-position = Vector2(197, 833)
+position = Vector2(205, 827)
 shape = SubResource("RectangleShape2D_ostsq")
 
 [node name="CollisionShape2D15" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2027299936]
-position = Vector2(379, 1173.4688)
+position = Vector2(386, 1165.4688)
 shape = SubResource("RectangleShape2D_3km4f")
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1161723216]
-position = Vector2(379, 832)
+position = Vector2(387, 826)
 shape = SubResource("RectangleShape2D_dc040")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=2112509033]
-position = Vector2(454, 1089)
+position = Vector2(461, 1084)
 shape = SubResource("RectangleShape2D_dc040")
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1636087864]
-position = Vector2(635, 1087)
+position = Vector2(642, 1082)
 shape = SubResource("RectangleShape2D_dc040")
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1329314003]
-position = Vector2(1082, 1024.0625)
+position = Vector2(1089, 1019.0625)
 shape = SubResource("RectangleShape2D_1rhdn")
 
 [node name="CollisionShape2D10" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=873439855]
-position = Vector2(1051, 1232.4688)
+position = Vector2(1059, 1226.4688)
 shape = SubResource("RectangleShape2D_sjxhf")
 
 [node name="CollisionShape2D33" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=653961882]
-position = Vector2(902, 991)
+position = Vector2(909, 986)
 shape = SubResource("RectangleShape2D_sjxhf")
 
 [node name="CollisionShape2D12" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1353904270]
-position = Vector2(1157, 1232)
+position = Vector2(1164, 1224)
 shape = SubResource("RectangleShape2D_sjxhf")
 
 [node name="CollisionShape2D13" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1090904247]
@@ -220,35 +229,35 @@ position = Vector2(8, -2)
 shape = SubResource("SegmentShape2D_nha0i")
 
 [node name="CollisionShape2D11" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=336631443]
-position = Vector2(902, 703.2656)
+position = Vector2(909, 697.2656)
 shape = SubResource("RectangleShape2D_qkm1d")
 
 [node name="CollisionShape2D16" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=642800016]
-position = Vector2(902, 831)
+position = Vector2(909, 825)
 shape = SubResource("RectangleShape2D_qkm1d")
 
 [node name="CollisionShape2D17" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=918256438]
-position = Vector2(1212, 705)
+position = Vector2(1219, 699)
 shape = SubResource("RectangleShape2D_qkm1d")
 
 [node name="CollisionShape2D18" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1345160427]
-position = Vector2(1212, 832.7344)
+position = Vector2(1219, 826.7344)
 shape = SubResource("RectangleShape2D_qkm1d")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1373967359]
-position = Vector2(442, 560.625)
+position = Vector2(450, 554.625)
 shape = SubResource("RectangleShape2D_gyg6b")
 
 [node name="CollisionShape2D28" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1816781777]
-position = Vector2(515.25, 447.8125)
+position = Vector2(522.25, 441.8125)
 shape = SubResource("RectangleShape2D_vc03v")
 
 [node name="CollisionShape2D29" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1833035318]
-position = Vector2(766, 448)
+position = Vector2(773, 442)
 shape = SubResource("RectangleShape2D_vc03v")
 
 [node name="CollisionShape2D20" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1666125942]
-position = Vector2(1083, 543.375)
+position = Vector2(1090, 537.375)
 shape = SubResource("RectangleShape2D_p5fgu")
 
 [node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
@@ -257,6 +266,13 @@ position = Vector2(82, 102)
 [node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
 position = Vector2(1227, 301)
 player_node = NodePath("../Player")
+
+[node name="WinZone" type="Area2D" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1221245722]
+script = ExtResource("8_roob6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/WinZone" unique_id=1052358229]
+position = Vector2(1112, 1229)
+shape = SubResource("CircleShape2D_d8523")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 script = ExtResource("6_sjxhf")
@@ -325,6 +341,7 @@ texture_normal = ExtResource("15_rikml")
 texture_pressed = ExtResource("18_yub1f")
 
 [node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
+visible = false
 
 [node name="LoseScreen" type="Control" parent="CanvasLayer" unique_id=261953009]
 visible = false
@@ -376,6 +393,58 @@ offset_bottom = 824.0
 texture_normal = ExtResource("14_hjnkw")
 texture_pressed = ExtResource("16_grv7h")
 
+[node name="WinScreen" type="Control" parent="CanvasLayer" unique_id=529138826]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 7.0
+offset_top = -4.0
+offset_right = 47.0
+offset_bottom = 36.0
+
+[node name="Overlay" type="ColorRect" parent="CanvasLayer/WinScreen" unique_id=1980944605]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = 7.0
+offset_right = 1831.0
+offset_bottom = 1242.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.53333336)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/WinScreen" unique_id=1140049384]
+layout_mode = 1
+offset_left = 406.0
+offset_top = 289.0
+offset_right = 1447.3334
+offset_bottom = 999.0
+texture = ExtResource("22_d8523")
+
+[node name="QuitButton" type="TextureButton" parent="CanvasLayer/WinScreen" unique_id=1620743365]
+process_mode = 3
+layout_mode = 0
+offset_left = 946.0
+offset_top = 726.0
+offset_right = 1203.0
+offset_bottom = 823.0
+texture_normal = ExtResource("15_rikml")
+texture_pressed = ExtResource("18_yub1f")
+
+[node name="RestartButton" type="TextureButton" parent="CanvasLayer/WinScreen" unique_id=28330216]
+process_mode = 3
+layout_mode = 0
+offset_left = 658.0
+offset_top = 727.0
+offset_right = 915.0
+offset_bottom = 824.0
+texture_normal = ExtResource("14_hjnkw")
+texture_pressed = ExtResource("16_grv7h")
+
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/LoseScreen/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/LoseScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/WinScreen/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/WinScreen/RestartButton" to="." method="_on_restart_button_pressed"]

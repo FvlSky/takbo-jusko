@@ -6,6 +6,7 @@ extends Node2D
 @onready var player: Node2D = $MapPivot/SubViewportContainer/SubViewport/Player
 @onready var enemy: Node2D = $MapPivot/SubViewportContainer/SubViewport/Enemy
 @onready var lose_screen: Control = $CanvasLayer/LoseScreen
+@onready var win_screen: Control = $CanvasLayer/WinScreen
 @onready var overlay: ColorRect = $CanvasLayer/LoseScreen/Overlay
 @onready var start_screen = $CanvasLayer/StartScreen
 
@@ -17,6 +18,7 @@ signal timer_updated(time_left: float, time_elapsed: float)
 var time_elapsed: float = 0.0
 var time_left: float = 90.0
 var director_timer: float = 0.0
+var game_over: bool = false
 
 
 func _ready() -> void:
@@ -34,13 +36,20 @@ func _ready() -> void:
 	$CanvasLayer/LoseScreen/RestartButton.pressed.connect(_on_restart_button_pressed)
 	$CanvasLayer/LoseScreen/QuitButton.pressed.connect(_on_quit_button_pressed)
 
-	# Skip start screen if restarting from lose screen
+	# Connect win screen buttons
+	$CanvasLayer/WinScreen/RestartButton.pressed.connect(_on_restart_button_pressed)
+	$CanvasLayer/WinScreen/QuitButton.pressed.connect(_on_quit_button_pressed)
+
+	# Skip start screen if restarting
 	if Global.skip_start_screen:
 		start_screen.visible = false
 		Global.skip_start_screen = false
 
 
 func _process(delta: float) -> void:
+	if game_over:
+		return
+
 	time_elapsed += delta
 	time_left = max(game_duration - time_elapsed, 0.0)
 	timer_updated.emit(time_left, time_elapsed)
@@ -50,8 +59,8 @@ func _process(delta: float) -> void:
 		director_timer = 0.0
 		update_director_ai()
 
-	if time_left <= 0.0:
-		print("Time is up!")
+	if time_left <= 0.0 and not game_over:
+		trigger_lose()
 
 
 func _input(event: InputEvent) -> void:
@@ -73,33 +82,28 @@ func update_director_ai() -> void:
 	if player.has_method("get_stamina_ratio"):
 		stamina_ratio = player.get_stamina_ratio()
 
-	# 1. Chaos Engine computes Chaos Score and Temperature
 	var chaos_context: Dictionary = chaos_engine.update_context(
 		distance_to_dog,
 		stamina_ratio,
 		time_elapsed
 	)
 
-	# 2. Director AI reads the latest Chaos Score and Temperature
 	if director_ai.has_method("set_chaos_context"):
 		director_ai.set_chaos_context(
 			chaos_context["chaos_score"],
 			chaos_context["temperature"]
 		)
 
-	# 3. Director AI proposes an environmental effect
 	var decision: Dictionary = director_ai.evaluate(
 		distance_to_dog,
 		stamina_ratio,
 		time_elapsed
 	)
 
-	# 4. Chaos Engine decides if the proposed effect is accepted or rejected
 	var chaos_result: Dictionary = chaos_engine.evaluate_effect(
 		decision["selected_effect"]
 	)
 
-	# 5. Print Director AI output
 	print(
 		"[Director AI] state=", decision["current_state"],
 		" | rule=", decision["selected_rule"],
@@ -109,7 +113,6 @@ func update_director_ai() -> void:
 		" | time=", str(round(time_elapsed)), "s"
 	)
 
-	# 6. Print Chaos Engine output
 	print(
 		"[Chaos Engine] proposed=", chaos_result["proposed_effect"],
 		" | final=", chaos_result["final_effect"],
@@ -121,7 +124,6 @@ func update_director_ai() -> void:
 		" | r=", str(snapped(chaos_result["random_value"], 0.01))
 	)
 
-	# 7. Apply only the final accepted effect
 	apply_chaos_effect(chaos_result["final_effect"])
 
 
@@ -146,12 +148,20 @@ func apply_chaos_effect(final_effect: String) -> void:
 
 
 func trigger_lose() -> void:
+	if game_over:
+		return
+	game_over = true
 	overlay.visible = true
 	lose_screen.visible = true
 	get_tree().paused = true
 
 
 func trigger_win() -> void:
+	if game_over:
+		return
+	game_over = true
+	overlay.visible = true
+	win_screen.visible = true
 	get_tree().paused = true
 
 
