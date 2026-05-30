@@ -29,6 +29,8 @@ var current_state: String = "idle"
 var selected_rule: String = "none"
 var selected_effect: String = "none"
 var effect_cooldown: float = 0.0
+var latest_chaos_score: float = 0.0
+var latest_temperature: float = 0.0
 
 func evaluate(distance_to_dog: float, stamina_ratio: float, time_elapsed: float) -> Dictionary:
 	# Tick cooldown down by 1 each call (called every 1 second from main.gd)
@@ -148,3 +150,7 @@ func get_selected_rule() -> String:
 
 func get_selected_effect() -> String:
 	return selected_effect
+
+func set_chaos_context(score: float, temp: float) -> void:
+	latest_chaos_score = score
+	latest_temperature = temp

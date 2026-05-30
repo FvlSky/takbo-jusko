@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://clm3pefc0yuqo" path="res://scripts/ai/director.gd" id="2_1rhdn"]
 [ext_resource type="Script" uid="uid://tesxhnj12wqw" path="res://scenes/main/map_pivot.gd" id="2_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
+[ext_resource type="Script" uid="uid://dnqt6ewq40b4u" path="res://scripts/ai/chaos_engine.gd" id="3_qkm1d"]
 [ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
 [ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
@@ -79,6 +80,9 @@ color = Color(0.10980392, 0.050980393, 0.10980392, 1)
 
 [node name="DirectorAI" type="Node" parent="." unique_id=2041668594]
 script = ExtResource("2_1rhdn")
+
+[node name="ChaosEngine" type="Node" parent="." unique_id=1292391831]
+script = ExtResource("3_qkm1d")
 
 [node name="MapPivot" type="Node2D" parent="." unique_id=11895498]
 position = Vector2(300, 0)
