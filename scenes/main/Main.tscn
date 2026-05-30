@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://6wg5ewbw8rpo" path="res://assets/ui/QUIT_BUTTON.png" id="15_rikml"]
 [ext_resource type="Texture2D" uid="uid://d3kufap5dfmmg" path="res://assets/ui/RESTART_PRESSED.png" id="16_grv7h"]
 [ext_resource type="Texture2D" uid="uid://boh2gbkydd218" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
+[ext_resource type="Texture2D" uid="uid://cy586nn8mqjb1" path="res://assets/ui/Lose Pop Up.png" id="21_yub1f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -254,7 +255,7 @@ shape = SubResource("RectangleShape2D_p5fgu")
 position = Vector2(82, 102)
 
 [node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
-position = Vector2(830, 258)
+position = Vector2(1227, 301)
 player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
@@ -325,4 +326,56 @@ texture_pressed = ExtResource("18_yub1f")
 
 [node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
 
+[node name="LoseScreen" type="Control" parent="CanvasLayer" unique_id=261953009]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 7.0
+offset_top = -4.0
+offset_right = 47.0
+offset_bottom = 36.0
+
+[node name="Overlay" type="ColorRect" parent="CanvasLayer/LoseScreen" unique_id=2074752275]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = 7.0
+offset_right = 1831.0
+offset_bottom = 1242.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.53333336)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/LoseScreen" unique_id=979574555]
+layout_mode = 1
+offset_left = 406.0
+offset_top = 289.0
+offset_right = 1447.3334
+offset_bottom = 999.0
+texture = ExtResource("21_yub1f")
+
+[node name="QuitButton" type="TextureButton" parent="CanvasLayer/LoseScreen" unique_id=1340038236]
+process_mode = 3
+layout_mode = 0
+offset_left = 946.0
+offset_top = 726.0
+offset_right = 1203.0
+offset_bottom = 823.0
+texture_normal = ExtResource("15_rikml")
+texture_pressed = ExtResource("18_yub1f")
+
+[node name="RestartButton" type="TextureButton" parent="CanvasLayer/LoseScreen" unique_id=1843508263]
+process_mode = 3
+layout_mode = 0
+offset_left = 658.0
+offset_top = 727.0
+offset_right = 915.0
+offset_bottom = 824.0
+texture_normal = ExtResource("14_hjnkw")
+texture_pressed = ExtResource("16_grv7h")
+
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/LoseScreen/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/LoseScreen/RestartButton" to="." method="_on_restart_button_pressed"]

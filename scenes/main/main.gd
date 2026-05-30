@@ -5,6 +5,9 @@ extends Node2D
 @onready var chaos_engine: Node = $ChaosEngine
 @onready var player: Node2D = $MapPivot/SubViewportContainer/SubViewport/Player
 @onready var enemy: Node2D = $MapPivot/SubViewportContainer/SubViewport/Enemy
+@onready var lose_screen: Control = $CanvasLayer/LoseScreen
+@onready var overlay: ColorRect = $CanvasLayer/LoseScreen/Overlay
+@onready var start_screen = $CanvasLayer/StartScreen
 
 signal timer_updated(time_left: float, time_elapsed: float)
 
@@ -15,7 +18,10 @@ var time_elapsed: float = 0.0
 var time_left: float = 90.0
 var director_timer: float = 0.0
 
+
 func _ready() -> void:
+	add_to_group("game_manager")
+
 	print("map node: ", map)
 	print("director ai node: ", director_ai)
 	print("player node: ", player)
@@ -24,16 +30,29 @@ func _ready() -> void:
 	print("chaos engine node: ", chaos_engine)
 	print("chaos engine script: ", chaos_engine.get_script())
 
+	# Connect lose screen buttons
+	$CanvasLayer/LoseScreen/RestartButton.pressed.connect(_on_restart_button_pressed)
+	$CanvasLayer/LoseScreen/QuitButton.pressed.connect(_on_quit_button_pressed)
+
+	# Skip start screen if restarting from lose screen
+	if Global.skip_start_screen:
+		start_screen.visible = false
+		Global.skip_start_screen = false
+
+
 func _process(delta: float) -> void:
 	time_elapsed += delta
 	time_left = max(game_duration - time_elapsed, 0.0)
 	timer_updated.emit(time_left, time_elapsed)
+
 	director_timer += delta
 	if director_timer >= director_check_interval:
 		director_timer = 0.0
 		update_director_ai()
+
 	if time_left <= 0.0:
 		print("Time is up!")
+
 
 func _input(event: InputEvent) -> void:
 	if map == null:
@@ -43,13 +62,13 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		map.start_carousel()
 
+
 func update_director_ai() -> void:
 	if director_ai == null or chaos_engine == null or player == null or enemy == null:
 		print("[AI] Missing node reference.")
 		return
 
 	var distance_to_dog := player.global_position.distance_to(enemy.global_position)
-
 	var stamina_ratio := 1.0
 	if player.has_method("get_stamina_ratio"):
 		stamina_ratio = player.get_stamina_ratio()
@@ -105,29 +124,47 @@ func update_director_ai() -> void:
 	# 7. Apply only the final accepted effect
 	apply_chaos_effect(chaos_result["final_effect"])
 
+
 func apply_chaos_effect(final_effect: String) -> void:
 	if map == null:
 		return
-
 	match final_effect:
 		"jitter":
 			if map.has_method("trigger_jitter"):
 				map.trigger_jitter(0.5, 5.0)
-
 		"flip_90":
 			if map.has_method("trigger_flip"):
 				map.trigger_flip(90.0)
-
 		"flip_180":
 			if map.has_method("trigger_flip"):
 				map.trigger_flip(180.0)
-
 		"carousel":
 			if map.has_method("start_carousel"):
 				map.start_carousel()
-
 		"none":
 			pass
+
+
+func trigger_lose() -> void:
+	overlay.visible = true
+	lose_screen.visible = true
+	get_tree().paused = true
+
+
+func trigger_win() -> void:
+	get_tree().paused = true
+
+
+func _on_restart_button_pressed() -> void:
+	Global.skip_start_screen = true
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_quit_button_pressed() -> void:
+	Global.skip_start_screen = false
+	get_tree().quit()
+
 
 func format_time(seconds_left: float) -> String:
 	var total_seconds := int(seconds_left)
