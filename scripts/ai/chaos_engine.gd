@@ -20,19 +20,16 @@ signal chaos_decision_made(
 # Tuning Values
 # =============
 
-@export var t_min: float = 0.25
-@export var t_max: float = 1.10
-@export var initial_temperature: float = 0.55
+@export var t_min: float = 0.55
+@export var t_max: float = 1.20
+@export var initial_temperature: float = 0.80
 
-# Temperature decay tied to player performance
-# Lower performance = stronger cooling
-# Higher performance = slower cooling
-@export var low_performance_decay: float = 0.90
-@export var high_performance_decay: float = 0.98
+@export var low_performance_decay: float = 0.96
+@export var high_performance_decay: float = 0.99
 
-@export var delta_e_threshold: float = 0.75
+@export var delta_e_threshold: float = 0.85
 
-@export var game_duration: float = 180.0 # 3 minutes
+@export var game_duration: float = 90.0
 @export var safe_distance: float = 350.0
 
 @export var time_weight: float = 0.50
@@ -44,14 +41,14 @@ signal chaos_decision_made(
 # ============
 
 var chaos_score: float = 0.0
-var temperature: float = 0.55
+var temperature: float = 0.80
 
 var delta_e_values: Dictionary = {
-	"none": 0.0,
-	"jitter": 0.20,
-	"flip_90": 0.45,
-	"flip_180": 0.60,
-	"carousel": 0.75
+	"none":     0.0,
+	"jitter":   0.10,
+	"flip_90":  0.25,
+	"flip_180": 0.40,
+	"carousel": 0.55
 }
 
 
@@ -150,13 +147,13 @@ func evaluate_effect(proposed_effect: String) -> Dictionary:
 		final_effect = "none"
 
 	elif proposed_effect == "jitter":
-		# Jitter is treated as a warning cue, so it is always accepted.
+		# Jitter is always accepted as a warning cue
 		probability = 1.0
 		accepted = true
 		final_effect = proposed_effect
 
 	else:
-		# Manual Simulated Annealing formula:
+		# Simulated Annealing formula:
 		# P = e^(-ΔE / T)
 		probability = exp(-delta_e / temperature)
 

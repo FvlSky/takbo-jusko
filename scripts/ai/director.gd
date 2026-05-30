@@ -13,14 +13,14 @@ signal director_decision_made(
 # --------------
 # TUNING VALUES
 # --------------
-@export var danger_distance: float = 90.0
-@export var close_distance: float = 160.0
-@export var safe_distance: float = 180.0        # lowered from 280
+@export var danger_distance: float = 120.0
+@export var close_distance: float = 220.0
+@export var safe_distance: float = 150.0        # lowered from 280
 @export var low_stamina_threshold: float = 0.30
 @export var medium_stamina_threshold: float = 0.60
-@export var mid_game_time: float = 60.0
-@export var late_game_time: float = 120.0
-@export var effect_cooldown_duration: float = 4.0  # seconds between major effects
+@export var mid_game_time: float = 30.0
+@export var late_game_time: float = 60.0
+@export var effect_cooldown_duration: float = 2.0  # seconds between major effects
 
 # -------------
 # OUTPUT STATE
