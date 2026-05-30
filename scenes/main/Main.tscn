@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
 [ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
+[ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -237,30 +238,35 @@ player_node = NodePath("../Player")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 script = ExtResource("6_sjxhf")
 
-[node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=1864664578]
-position = Vector2(153, 117.99999)
-scale = Vector2(0.3439849, 0.34398493)
-texture = ExtResource("6_1rhdn")
-
-[node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1623620798]
-wait_time = 180.0
-one_shot = true
-
-[node name="Label" type="Label" parent="CanvasLayer" unique_id=1353781582]
-offset_left = 115.0
-offset_top = 232.0
-offset_right = 199.0
-offset_bottom = 290.0
-theme_override_font_sizes/font_size = 42
-text = "3:00"
-horizontal_alignment = 1
-
-[node name="PlayButton" type="Button" parent="." unique_id=1856935695]
+[node name="PlayButton" type="Button" parent="CanvasLayer" unique_id=1856935695]
 offset_left = 1651.0
 offset_top = 103.0
 offset_right = 1793.0
 offset_bottom = 161.0
 text = "PLAY"
 
+[node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=744201414]
+position = Vector2(154, 127)
+scale = Vector2(0.35526308, 0.3552631)
+texture = ExtResource("6_1rhdn")
+
+[node name="TimeFrame" type="Sprite2D" parent="CanvasLayer" unique_id=250193698]
+position = Vector2(155, 304)
+texture = ExtResource("8_ko0rf")
+
+[node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1623620798]
+wait_time = 180.0
+one_shot = true
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1353781582]
+offset_left = 37.0
+offset_top = 297.0
+offset_right = 276.0
+offset_bottom = 355.0
+theme_override_font_sizes/font_size = 42
+text = "3:00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/PlayButton" to="CanvasLayer" method="_on_button_pressed"]
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
-[connection signal="pressed" from="PlayButton" to="CanvasLayer" method="_on_button_pressed"]
