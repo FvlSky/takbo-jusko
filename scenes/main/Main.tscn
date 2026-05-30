@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://tesxhnj12wqw" path="res://scenes/main/map_pivot.gd" id="2_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
 [ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
+[ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
+[ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -233,4 +235,25 @@ position = Vector2(830, 258)
 player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
-visible = false
+script = ExtResource("6_sjxhf")
+
+[node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=1864664578]
+position = Vector2(153, 117.99999)
+scale = Vector2(0.3439849, 0.34398493)
+texture = ExtResource("6_1rhdn")
+
+[node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1623620798]
+wait_time = 180.0
+one_shot = true
+autostart = true
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=1353781582]
+offset_left = 115.0
+offset_top = 232.0
+offset_right = 199.0
+offset_bottom = 290.0
+theme_override_font_sizes/font_size = 42
+text = "3:00"
+horizontal_alignment = 1
+
+[connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
