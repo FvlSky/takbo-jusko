@@ -1,9 +1,16 @@
 extends Node2D
 
-# Existing map reference
+# existing map reference
 @onready var map = $MapPivot
 
-# Director AI references
+# timer
+signal timer_updated(time_left: float, time_elapsed: float)
+
+@export var game_duration: float = 180.0 # 3 minutes
+var time_elapsed: float = 0.0
+var time_left: float = 180.0
+
+# director AI references
 @onready var director_ai: Node = $DirectorAI
 @onready var player: Node2D = $MapPivot/SubViewportContainer/SubViewport/Player
 @onready var enemy: Node2D = $MapPivot/SubViewportContainer/SubViewport/Enemy
@@ -23,11 +30,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	time_elapsed += delta
-	director_timer += delta
+	time_left = max(game_duration - time_elapsed, 0.0)
 
-	if director_timer >= director_check_interval:
-		director_timer = 0.0
-		update_director_ai()
+	timer_updated.emit(time_left, time_elapsed)
+
+	if time_left <= 0.0:
+		print("Time is up!")
+		# Later: connect this to LoseScreen
 
 
 func _input(event: InputEvent) -> void:
