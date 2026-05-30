@@ -10,11 +10,13 @@ signal player_exhausted(is_exhausted: bool)
 
 @export var normal_speed: float = 155.0
 @export var sprint_speed: float = 265.0
+@export var low_stamina_speed: float = 90.0        # speed when nearly exhausted
+@export var low_stamina_threshold: float = 0.40    # below 30% stamina = slow down
 
 @export var max_stamina: float = 100.0
 @export var sprint_drain_rate: float = 38.0
 @export var stamina_regen_rate: float = 9.0
-@export var min_stamina_to_sprint: float = 15.0
+@export var min_stamina_to_sprint: float = 20.0
 
 # If true, stamina regenerates when the player is not sprinting.
 @export var regen_when_not_sprinting: bool = true
@@ -76,7 +78,6 @@ const _PANIC_TURN_DOT   : float = 0.30
 # ──────────────────────────────────────────────────────────────
 func _physics_process(delta: float) -> void:
 	var input_direction := get_screen_relative_input()
-
 	update_sprint_state(input_direction)
 	update_stamina(delta)
 	move_player(input_direction)
@@ -139,13 +140,6 @@ func _notify_dog(method: String, args: Array) -> void:
 # =========================
 
 func get_screen_relative_input() -> Vector2:
-	# Screen-relative means:
-	# W / Up    → always moves the player upward on screen.
-	# S / Down  → always moves the player downward on screen.
-	# A / Left  → always moves the player left on screen.
-	# D / Right → always moves the player right on screen.
-	#
-	# We do not rotate this input based on map rotation.
 	var input_direction := Input.get_vector(
 		"move_left",
 		"move_right",
@@ -163,6 +157,14 @@ func move_player(input_direction: Vector2) -> void:
 	var current_speed := normal_speed
 	if is_sprinting:
 		current_speed = sprint_speed
+	else:
+		# Slow down gradually as stamina drops below threshold
+		var stamina_ratio := get_stamina_ratio()
+		if stamina_ratio < low_stamina_threshold:
+			# Lerp between low_stamina_speed and normal_speed
+			# t = 0.0 means empty stamina, t = 1.0 means just hit threshold
+			var t := stamina_ratio / low_stamina_threshold
+			current_speed = lerp(low_stamina_speed, normal_speed, t)
 
 	velocity = input_direction * current_speed
 	move_and_slide()
@@ -196,15 +198,16 @@ func update_stamina(delta: float) -> void:
 	if is_sprinting:
 		current_stamina -= sprint_drain_rate * delta
 	elif regen_when_not_sprinting:
-		current_stamina += stamina_regen_rate * delta
+		# Regen is slow when stamina is low, faster as it recovers
+		var stamina_ratio := get_stamina_ratio()
+		var regen_multiplier: float = lerp(0.15, 1.0, stamina_ratio)
+		current_stamina += stamina_regen_rate * regen_multiplier * delta
 
 	current_stamina = clamp(current_stamina, 0.0, max_stamina)
-
 	update_exhausted_state()
 
 	if previous_stamina != current_stamina:
 		stamina_changed.emit(current_stamina, max_stamina)
-
 
 func update_exhausted_state() -> void:
 	var previous_exhausted := is_exhausted
@@ -212,7 +215,7 @@ func update_exhausted_state() -> void:
 	if current_stamina <= 0.0:
 		is_exhausted = true
 
-	# Player can sprint again once stamina recovers enough.
+	# Player can sprint again once stamina recovers enough
 	if current_stamina >= min_stamina_to_sprint * 2.0:
 		is_exhausted = false
 

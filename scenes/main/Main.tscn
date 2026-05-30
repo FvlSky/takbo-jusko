@@ -270,7 +270,7 @@ position = Vector2(155, 304)
 texture = ExtResource("8_ko0rf")
 
 [node name="Timer" type="Timer" parent="CanvasLayer" unique_id=1623620798]
-wait_time = 180.0
+wait_time = 90.0
 one_shot = true
 
 [node name="Label" type="Label" parent="CanvasLayer" unique_id=1353781582]
@@ -279,7 +279,7 @@ offset_top = 297.0
 offset_right = 276.0
 offset_bottom = 355.0
 theme_override_font_sizes/font_size = 42
-text = "3:00:00"
+text = "1:30:00"
 horizontal_alignment = 1
 vertical_alignment = 1
 

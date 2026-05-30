@@ -8,11 +8,11 @@ extends Node2D
 
 signal timer_updated(time_left: float, time_elapsed: float)
 
-@export var game_duration: float = 180.0
-@export var director_check_interval: float = 1.5
+@export var game_duration: float = 90.0
+@export var director_check_interval: float = 0.8
 
 var time_elapsed: float = 0.0
-var time_left: float = 180.0
+var time_left: float = 90.0
 var director_timer: float = 0.0
 
 func _ready() -> void:
