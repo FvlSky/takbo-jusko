@@ -1,23 +1,21 @@
 extends Node2D
 
-# existing map reference
+# Existing map reference
 @onready var map = $MapPivot
 
-# timer
-signal timer_updated(time_left: float, time_elapsed: float)
-
-@export var game_duration: float = 180.0 # 3 minutes
-var time_elapsed: float = 0.0
-var time_left: float = 180.0
-
-# director AI references
+# Director AI references
 @onready var director_ai: Node = $DirectorAI
 @onready var player: Node2D = $MapPivot/SubViewportContainer/SubViewport/Player
 @onready var enemy: Node2D = $MapPivot/SubViewportContainer/SubViewport/Enemy
 
+# Timer
+signal timer_updated(time_left: float, time_elapsed: float)
+
+@export var game_duration: float = 180.0 # 3 minutes
 @export var director_check_interval: float = 1.0
 
 var time_elapsed: float = 0.0
+var time_left: float = 180.0
 var director_timer: float = 0.0
 
 
@@ -26,6 +24,7 @@ func _ready() -> void:
 	print("director ai node: ", director_ai)
 	print("player node: ", player)
 	print("enemy node: ", enemy)
+	print("Timer started at: ", format_time(time_left))
 
 
 func _process(delta: float) -> void:
@@ -33,6 +32,11 @@ func _process(delta: float) -> void:
 	time_left = max(game_duration - time_elapsed, 0.0)
 
 	timer_updated.emit(time_left, time_elapsed)
+
+	director_timer += delta
+	if director_timer >= director_check_interval:
+		director_timer = 0.0
+		update_director_ai()
 
 	if time_left <= 0.0:
 		print("Time is up!")
@@ -76,3 +80,10 @@ func update_director_ai() -> void:
 		" | stamina=", str(round(stamina_ratio * 100.0)), "%",
 		" | time=", str(round(time_elapsed)), "s"
 	)
+
+
+func format_time(seconds_left: float) -> String:
+	var total_seconds := int(seconds_left)
+	var minutes := total_seconds / 60
+	var seconds := total_seconds % 60
+	return "%02d:%02d" % [minutes, seconds]
