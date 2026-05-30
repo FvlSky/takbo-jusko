@@ -229,7 +229,7 @@ shape = SubResource("RectangleShape2D_p5fgu")
 position = Vector2(82, 102)
 
 [node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
-position = Vector2(50, 100)
+position = Vector2(830, 258)
 player_node = NodePath("../Player")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
