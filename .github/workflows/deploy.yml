@@ -1,15 +1,13 @@
-name: Deploy to itch.io
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 env:
-  GODOT_VERSION: 4.6.3
-  EXPORT_NAME: takbo-jusko
-  ITCHIO_USERNAME: FvlSky 
-  ITCHIO_GAME: takbo-jusko
+  GODOT_VERSION: 4.3.0
 
 jobs:
   export-web:
@@ -36,17 +34,14 @@ jobs:
         run: |
           godot --headless -v --export-release "Web" ./build/web/index.html
 
-      - name: Add coi-serviceworker (fixes cross-origin isolation on itch.io)
+      - name: Add coi-serviceworker
         run: |
           cd build/web
           wget -q https://raw.githubusercontent.com/gzuidhof/coi-serviceworker/master/coi-serviceworker.min.js
           sed -i 's/<head>/<head>\n<script src="coi-serviceworker.min.js"><\/script>/' index.html
 
-      - name: Deploy to itch.io via Butler
-        uses: josephbmanley/butler-publish-itchio-action@v1.0.3
-        env:
-          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
-          CHANNEL: html5
-          ITCH_GAME: ${{ env.ITCHIO_GAME }}
-          ITCH_USER: ${{ env.ITCHIO_USERNAME }}
-          PACKAGE: build/web
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
