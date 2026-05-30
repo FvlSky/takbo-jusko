@@ -1,11 +1,148 @@
 extends Node
 
+# =======================================
+# Director AI — Rule-Based Decision Tree
+# =======================================
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+signal director_decision_made(
+	current_state: String,
+	selected_rule: String,
+	selected_effect: String,
+	distance_to_dog: float,
+	stamina_ratio: float,
+	time_elapsed: float
+)
+
+# --------------
+# TUNING VALUES
+# --------------
+
+@export var danger_distance: float = 90.0
+@export var close_distance: float = 160.0
+@export var safe_distance: float = 280.0
+
+@export var low_stamina_threshold: float = 0.30
+@export var medium_stamina_threshold: float = 0.60
+
+@export var mid_game_time: float = 60.0
+@export var late_game_time: float = 120.0
+
+# -------------
+# OUTPUT STATE
+# -------------
+
+var current_state: String = "idle"
+var selected_rule: String = "none"
+var selected_effect: String = "none"
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func evaluate(distance_to_dog: float, stamina_ratio: float, time_elapsed: float) -> Dictionary:
+	# This function is the main decision tree.
+	# It receives live game values and returns the selected Director AI decision.
+
+	if is_danger_close(distance_to_dog):
+		current_state = "warning"
+		selected_rule = "dog_danger_close"
+		selected_effect = "jitter"
+
+	elif is_low_stamina(stamina_ratio) and is_close(distance_to_dog):
+		current_state = "critical_pressure"
+		selected_rule = "low_stamina_and_close_dog"
+		selected_effect = "jitter"
+
+	elif is_low_stamina(stamina_ratio):
+		current_state = "low_stamina_pressure"
+		selected_rule = "low_stamina_only"
+		selected_effect = "flip_90"
+
+	elif is_late_game(time_elapsed) and is_safe(distance_to_dog) and is_stamina_good(stamina_ratio):
+		current_state = "late_game_high_pressure"
+		selected_rule = "late_game_safe_player"
+		selected_effect = "carousel"
+
+	elif is_mid_game(time_elapsed) and is_safe(distance_to_dog):
+		current_state = "mid_game_pressure"
+		selected_rule = "mid_game_safe_player"
+		selected_effect = "flip_180"
+
+	elif is_close(distance_to_dog):
+		current_state = "close_range_pressure"
+		selected_rule = "dog_close"
+		selected_effect = "flip_90"
+
+	else:
+		current_state = "stable"
+		selected_rule = "stable_no_major_distortion"
+		selected_effect = "none"
+
+	var decision := {
+		"current_state": current_state,
+		"selected_rule": selected_rule,
+		"selected_effect": selected_effect,
+		"distance_to_dog": distance_to_dog,
+		"stamina_ratio": stamina_ratio,
+		"time_elapsed": time_elapsed
+	}
+
+	director_decision_made.emit(
+		current_state,
+		selected_rule,
+		selected_effect,
+		distance_to_dog,
+		stamina_ratio,
+		time_elapsed
+	)
+
+	return decision
+
+
+# =============================
+# CONDITION-CHECKING FUNCTIONS
+# =============================
+
+func is_danger_close(distance_to_dog: float) -> bool:
+	return distance_to_dog <= danger_distance
+
+
+func is_close(distance_to_dog: float) -> bool:
+	return distance_to_dog <= close_distance
+
+
+func is_safe(distance_to_dog: float) -> bool:
+	return distance_to_dog >= safe_distance
+
+
+func is_low_stamina(stamina_ratio: float) -> bool:
+	return stamina_ratio <= low_stamina_threshold
+
+
+func is_medium_stamina(stamina_ratio: float) -> bool:
+	return stamina_ratio <= medium_stamina_threshold
+
+
+func is_stamina_good(stamina_ratio: float) -> bool:
+	return stamina_ratio > medium_stamina_threshold
+
+
+func is_mid_game(time_elapsed: float) -> bool:
+	return time_elapsed >= mid_game_time
+
+
+func is_late_game(time_elapsed: float) -> bool:
+	return time_elapsed >= late_game_time
+
+
+# ================================
+# GETTERS FOR DEBUG OVERLAY / HUD
+# ================================
+
+func get_current_state() -> String:
+	return current_state
+
+
+func get_selected_rule() -> String:
+	return selected_rule
+
+
+func get_selected_effect() -> String:
+	return selected_effect

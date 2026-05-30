@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b360bytw1n85d" path="res://scenes/main/main.gd" id="1_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://b83nf8tqmucw6" path="res://scenes/map/TileMap.tscn" id="1_nha0i"]
+[ext_resource type="Script" uid="uid://clm3pefc0yuqo" path="res://scripts/ai/director.gd" id="2_1rhdn"]
 [ext_resource type="Script" uid="uid://tesxhnj12wqw" path="res://scenes/main/map_pivot.gd" id="2_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
 [ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
@@ -71,6 +72,9 @@ script = ExtResource("1_gyg6b")
 offset_right = 1880.0
 offset_bottom = 1280.0
 color = Color(0.10980392, 0.050980393, 0.10980392, 1)
+
+[node name="DirectorAI" type="Node" parent="." unique_id=2041668594]
+script = ExtResource("2_1rhdn")
 
 [node name="MapPivot" type="Node2D" parent="." unique_id=11895498]
 position = Vector2(300, 0)
@@ -227,6 +231,13 @@ shape = SubResource("RectangleShape2D_p5fgu")
 
 [node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
 position = Vector2(82, 102)
+normal_speed = null
+sprint_speed = null
+max_stamina = null
+sprint_drain_rate = null
+stamina_regen_rate = null
+min_stamina_to_sprint = null
+regen_when_not_sprinting = null
 
 [node name="Enemy" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1582178649 node_paths=PackedStringArray("player_node") instance=ExtResource("5_dc040")]
 position = Vector2(830, 258)
