@@ -105,12 +105,15 @@ var _stuck_count         : int   = 0
 const _WAYPOINT_DIST  : float = 6.0
 const _MAX_ITERATIONS : int   = 800
 
+# ── PRIVATE STATE (add alongside the other vars) ─────────────
+var _chase_elapsed : float = 0.0
 
 # ──────────────────────────────────────────────────────────────
 #  LIFECYCLE
 # ──────────────────────────────────────────────────────────────
 func _ready() -> void:
 	add_to_group("dog")
+	_chase_elapsed = 0.0
 	_current_speed = move_speed
 
 	if not player_node:
@@ -142,12 +145,15 @@ func _physics_process(delta: float) -> void:
 	_time_since_repath += delta
 	_repath_cooldown    = max(0.0, _repath_cooldown    - delta)
 	_speed_boost_timer  = max(0.0, _speed_boost_timer  - delta)
-	_panic_boost_timer  = max(0.0, _panic_boost_timer  - delta)  # FIX 1
+	_panic_boost_timer  = max(0.0, _panic_boost_timer  - delta)
+	
+	_chase_elapsed += delta
 
-	# ── Speed: highest active multiplier wins (no stacking) ─────
-	var active_mult : float = 1.0
+# ── Speed: passive ramp is the floor; event boosts override upward ──
+	var passive_mult : float = 1.0 + clamp(_chase_elapsed / 25.0, 0.0, 0.40)
+	var active_mult  : float = passive_mult
 	if _speed_boost_timer > 0.0:
-		var surge_mult := streak_boost_multiplier if _streak_boost_active else speed_boost_multiplier
+		var surge_mult : float = streak_boost_multiplier if _streak_boost_active else speed_boost_multiplier
 		active_mult = max(active_mult, surge_mult)
 	if _panic_boost_timer > 0.0:
 		active_mult = max(active_mult, panic_boost_multiplier)
@@ -276,9 +282,16 @@ func _recalculate_path() -> void:
 		effective_k *= float(tile_dist) / float(proximity_tile_threshold)
 
 	# Step 6 | Predictive target (effective_k may now be 0 from above)
-	var tile_size       : float   = float(tilemap_node.tile_set.tile_size.x)
+	var tile_size      : float   = float(tilemap_node.tile_set.tile_size.x)
+
+	# Time horizon: how many seconds of lookahead, expressed in
+	# "dog-tile-widths".  At move_speed=170, tile_size=32, k=5 → ~0.94 s.
+	var time_lookahead : float   = effective_k * tile_size / max(move_speed, 1.0)
+
+	# Multiply raw velocity — no normalise — so a slow player gets a
+	# small prediction and a fast player gets a large one.
 	var predicted_world : Vector2 = player_node.global_position \
-								  + _smoothed_player_vel.normalized() * effective_k * tile_size
+								   + _smoothed_player_vel * time_lookahead
 
 	# Step 7 | World → tile + walkability snap
 	var goal_tile : Vector2i = tilemap_node.local_to_map(
@@ -290,12 +303,14 @@ func _recalculate_path() -> void:
 	if goal_tile == start_tile:
 		goal_tile = player_tile   # already computed above, no redundant call
 
-	# Step 8 | A* search
+# ── Step 8 | A* search ──────────────────────────────────────
 	var tile_path : Array = _run_astar(start_tile, goal_tile)
 
-	_path.clear()
-	for t in tile_path:
-		_path.append(tilemap_node.to_global(tilemap_node.map_to_local(t)))
+	# Only swap when a valid path came back:
+	if not tile_path.is_empty():
+		_path.clear()
+		for t in tile_path:
+				_path.append(tilemap_node.to_global(tilemap_node.map_to_local(t)))
 
 
 # ──────────────────────────────────────────────────────────────
@@ -303,8 +318,11 @@ func _recalculate_path() -> void:
 # ──────────────────────────────────────────────────────────────
 func _follow_path() -> void:
 	if _path.is_empty():
-		velocity = Vector2.ZERO
-		move_and_slide()
+		# No path yet or A* failed — beeline directly at the player.
+		if player_node:
+			velocity = (player_node.global_position - global_position).normalized() \
+					   * _current_speed
+			move_and_slide()
 		return
 
 	var target    : Vector2 = _path[0]
