@@ -1,10 +1,5 @@
 # ==============================================================
-#  Dog.gd — Hunter AI for "Takbo, Jusko!"
-#  Manual A* Pathfinding with Predictive Targeting
-#  Godot 4.x  |  COSC 304 – Introduction to Artificial Intelligence
-#
-#  All algorithm logic is written from scratch — no external
-#  pathfinding libraries are used.
+#  Hunter AI - A* Pathfinding with Predictive Targeting
 # ==============================================================
 extends CharacterBody2D
 
@@ -296,3 +291,17 @@ func _nearest_walkable(origin: Vector2i) -> Vector2i:
 				visited[nb] = true
 				queue.append(nb)
 	return origin   # fallback: return the original (still on a wall, but won't crash)
+	
+func _process(_delta: float) -> void:
+	# VISUALIZER FUNCTION
+	queue_redraw()
+
+func _draw() -> void:
+	# Draw a line connecting all waypoints in the path
+	if _path.size() > 1:
+		for i in range(_path.size() - 1):
+			# Convert global path coordinates to local coordinates for drawing
+			var point_a = to_local(_path[i])
+			var point_b = to_local(_path[i + 1])
+			draw_line(point_a, point_b, Color.RED, 32.0)
+			draw_circle(point_b, 3.0, Color.YELLOW) # Draw a dot at each waypoint
