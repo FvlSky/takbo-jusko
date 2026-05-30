@@ -9,6 +9,8 @@ extends Node2D
 @onready var win_screen: Control = $CanvasLayer/WinScreen
 @onready var overlay: ColorRect = $CanvasLayer/LoseScreen/Overlay
 @onready var start_screen = $CanvasLayer/StartScreen
+@onready var player_spawns: Node = $MapPivot/SubViewportContainer/SubViewport/PlayerSpawns
+@onready var enemy_spawns: Node  = $MapPivot/SubViewportContainer/SubViewport/EnemySpawns
 
 signal timer_updated(time_left: float, time_elapsed: float)
 
@@ -44,6 +46,9 @@ func _ready() -> void:
 	if Global.skip_start_screen:
 		start_screen.visible = false
 		Global.skip_start_screen = false
+	
+	player.reset_player_state(_random_spawn(player_spawns))
+	enemy.global_position = _random_spawn(enemy_spawns)
 
 
 func _process(delta: float) -> void:
@@ -181,3 +186,9 @@ func format_time(seconds_left: float) -> String:
 	var minutes := int(total_seconds / 60.0)
 	var seconds := total_seconds % 60
 	return "%02d:%02d" % [minutes, seconds]
+
+func _random_spawn(parent: Node) -> Vector2:
+	var points := parent.get_children()
+	if points.is_empty():
+		return Vector2.ZERO
+	return points[randi() % points.size()].global_position
