@@ -274,6 +274,70 @@ script = ExtResource("8_roob6")
 position = Vector2(1112, 1229)
 shape = SubResource("CircleShape2D_d8523")
 
+[node name="PlayerSpawns" type="Node2D" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1355890152]
+
+[node name="Marker2D" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=384960923]
+position = Vector2(160, 160)
+
+[node name="Marker2D2" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=686464081]
+position = Vector2(160, 1120)
+
+[node name="Marker2D3" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=1794047569]
+position = Vector2(640, 640)
+
+[node name="Marker2D4" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=1308901819]
+position = Vector2(350, 400)
+
+[node name="Marker2D5" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=518814462]
+position = Vector2(350, 900)
+
+[node name="Marker2D6" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=1282696520]
+position = Vector2(160, 1100)
+
+[node name="Marker2D7" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=2099380753]
+position = Vector2(1100, 180)
+
+[node name="Marker2D8" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=628127160]
+position = Vector2(1000, 640)
+
+[node name="Marker2D9" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=1170552920]
+position = Vector2(280, 640)
+
+[node name="Marker2D10" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/PlayerSpawns" unique_id=758841515]
+position = Vector2(640, 260)
+
+[node name="EnemySpawns" type="Node2D" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1963490890]
+
+[node name="Marker2D" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=1526908273]
+position = Vector2(1120, 160)
+
+[node name="Marker2D2" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=649671880]
+position = Vector2(1120, 1120)
+
+[node name="Marker2D3" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=733254155]
+position = Vector2(1000, 640)
+
+[node name="Marker2D4" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=1437425173]
+position = Vector2(850, 300)
+
+[node name="Marker2D5" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=1931430151]
+position = Vector2(850, 1000)
+
+[node name="Marker2D6" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=397661453]
+position = Vector2(220, 1020)
+
+[node name="Marker2D7" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=2003484523]
+position = Vector2(1080, 750)
+
+[node name="Marker2D8" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=1647059468]
+position = Vector2(200, 750)
+
+[node name="Marker2D9" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=604328125]
+position = Vector2(640, 1050)
+
+[node name="Marker2D10" type="Marker2D" parent="MapPivot/SubViewportContainer/SubViewport/EnemySpawns" unique_id=224937094]
+position = Vector2(900, 280)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 script = ExtResource("6_sjxhf")
 
