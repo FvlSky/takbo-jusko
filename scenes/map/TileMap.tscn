@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bqxfdneyrbxms" path="res://assets/ui/BASE LAYER.png" id="1_elnvl"]
 [ext_resource type="Texture2D" uid="uid://qp66vrxbhw5x" path="res://assets/ui/ASSETS.png" id="2_x25im"]
 [ext_resource type="Texture2D" uid="uid://cd368iv8nmp4n" path="res://assets/ui/LIGHTING LAYER - TRANSPARENT.png" id="3_pce2p"]
+[ext_resource type="Texture2D" uid="uid://cwm2yb5hljhsx" path="res://assets/ui/GATE.png" id="4_fdgu1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elnvl"]
 texture = ExtResource("1_elnvl")
@@ -3129,3 +3130,7 @@ tile_set = SubResource("TileSet_fdgu1")
 [node name="LightingLayerTransparent" type="Sprite2D" parent="TileMapLayer" unique_id=414229327]
 position = Vector2(-635, -637)
 texture = ExtResource("3_pce2p")
+
+[node name="Gate" type="Sprite2D" parent="TileMapLayer/LightingLayerTransparent" unique_id=1349309638]
+position = Vector2(466, 555)
+texture = ExtResource("4_fdgu1")
