@@ -449,13 +449,13 @@ func _nearest_walkable(origin: Vector2i) -> Vector2i:
 #  DEBUG VISUALIZER
 #  Comment out the entire block below when not debugging
 # ──────────────────────────────────────────────────────────────
-func _process(_delta: float) -> void:
-	queue_redraw()
-
-func _draw() -> void:
-	if _path.size() > 1:
-		for i in range(_path.size() - 1):
-			var point_a = to_local(_path[i])
-			var point_b = to_local(_path[i + 1])
-			draw_line(point_a, point_b, Color.RED, 32.0)
-			draw_circle(point_b, 3.0, Color.YELLOW)
+#func _process(_delta: float) -> void:
+	#queue_redraw()
+#
+#func _draw() -> void:
+	#if _path.size() > 1:
+		#for i in range(_path.size() - 1):
+			#var point_a = to_local(_path[i])
+			#var point_b = to_local(_path[i + 1])
+			#draw_line(point_a, point_b, Color.RED, 32.0)
+			#draw_circle(point_b, 3.0, Color.YELLOW)
