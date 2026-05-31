@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://30wocsumhj8i"]
+[gd_scene format=4 uid="uid://30wocsumhj8i"]
 
 [ext_resource type="Script" uid="uid://b360bytw1n85d" path="res://scenes/main/main.gd" id="1_gyg6b"]
 [ext_resource type="PackedScene" uid="uid://b83nf8tqmucw6" path="res://scenes/map/TileMap.tscn" id="1_nha0i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 [ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
 [ext_resource type="Script" uid="uid://cg2as1d06goyx" path="res://scenes/main/win_zone.gd" id="8_roob6"]
+[ext_resource type="Texture2D" uid="uid://blmcf7uxwcwdu" path="res://assets/ui/ASSETS.png" id="9_n12rl"]
 [ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
 [ext_resource type="Texture2D" uid="uid://4oarkareoskn" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
 [ext_resource type="Texture2D" uid="uid://65eyxnyqjdal" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
@@ -23,6 +24,8 @@
 [ext_resource type="Texture2D" uid="uid://boh2gbkydd218" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
 [ext_resource type="Texture2D" uid="uid://cy586nn8mqjb1" path="res://assets/ui/Lose Pop Up.png" id="21_yub1f"]
 [ext_resource type="Texture2D" uid="uid://fg8g5003lpph" path="res://assets/ui/Win Pop Up.png" id="22_d8523"]
+[ext_resource type="Texture2D" uid="uid://coocwgvvqiyu0" path="res://assets/ui/Movement.png" id="24_j0f7u"]
+[ext_resource type="Texture2D" uid="uid://c280smetbfvjn" path="res://assets/ui/RUN.png" id="25_n12rl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q24mn"]
 size = Vector2(9, 190.5)
@@ -74,7 +77,13 @@ size = Vector2(9, 94.9375)
 b = Vector2(0, 1280)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkm1d"]
-size = Vector2(9, 63.46875)
+size = Vector2(27.5, 49.734375)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n12rl"]
+size = Vector2(5.75, 72.86719)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cxqb"]
+size = Vector2(247.5, 33.1875)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vc03v"]
 size = Vector2(5.5, 190.375)
@@ -82,8 +91,52 @@ size = Vector2(5.5, 190.375)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5fgu"]
 size = Vector2(9, 128.75)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u7tt4"]
+radius = 41.0
+height = 140.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ilqpp"]
+size = Vector2(27, 127)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ftc2p"]
+size = Vector2(15.5, 63.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_04n4k"]
+size = Vector2(57.75, 39.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8dhb5"]
+size = Vector2(27, 62.75)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_d8523"]
 radius = 49.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0cxqb"]
+texture = ExtResource("9_n12rl")
+4:4/size_in_atlas = Vector2i(8, 10)
+4:4/0 = 0
+16:4/size_in_atlas = Vector2i(8, 10)
+16:4/0 = 0
+28:4/size_in_atlas = Vector2i(8, 10)
+28:4/0 = 0
+40:6/size_in_atlas = Vector2i(6, 8)
+40:6/0 = 0
+64:6/size_in_atlas = Vector2i(6, 8)
+64:6/0 = 0
+4:18/size_in_atlas = Vector2i(4, 6)
+4:18/0 = 0
+12:18/size_in_atlas = Vector2i(4, 6)
+12:18/0 = 0
+20:18/size_in_atlas = Vector2i(4, 6)
+20:18/0 = 0
+58:58/size_in_atlas = Vector2i(16, 14)
+58:58/0 = 0
+49:6/size_in_atlas = Vector2i(12, 8)
+49:6/0 = 0
+73:10/size_in_atlas = Vector2i(6, 4)
+73:10/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_u7tt4"]
+sources/0 = SubResource("TileSetAtlasSource_0cxqb")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkm1d"]
 atlas = ExtResource("11_qkm1d")
@@ -241,12 +294,20 @@ position = Vector2(1219, 699)
 shape = SubResource("RectangleShape2D_qkm1d")
 
 [node name="CollisionShape2D18" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1345160427]
-position = Vector2(1219, 826.7344)
+position = Vector2(1222.25, 932.8672)
 shape = SubResource("RectangleShape2D_qkm1d")
+
+[node name="CollisionShape2D41" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=908006726]
+position = Vector2(1174, 69)
+shape = SubResource("RectangleShape2D_n12rl")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1373967359]
 position = Vector2(450, 554.625)
 shape = SubResource("RectangleShape2D_gyg6b")
+
+[node name="CollisionShape2D40" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1444265361]
+position = Vector2(648, 368)
+shape = SubResource("RectangleShape2D_0cxqb")
 
 [node name="CollisionShape2D28" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1816781777]
 position = Vector2(522.25, 441.8125)
@@ -259,6 +320,26 @@ shape = SubResource("RectangleShape2D_vc03v")
 [node name="CollisionShape2D20" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1666125942]
 position = Vector2(1090, 537.375)
 shape = SubResource("RectangleShape2D_p5fgu")
+
+[node name="CollisionShape2D35" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1151727873]
+position = Vector2(644, 678)
+shape = SubResource("CapsuleShape2D_u7tt4")
+
+[node name="CollisionShape2D36" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=260299211]
+position = Vector2(824.5, 704.5)
+shape = SubResource("RectangleShape2D_ilqpp")
+
+[node name="CollisionShape2D37" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=981575048]
+position = Vector2(856.25, 543.75)
+shape = SubResource("RectangleShape2D_ftc2p")
+
+[node name="CollisionShape2D38" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=396266557]
+position = Vector2(73.125, 684.125)
+shape = SubResource("RectangleShape2D_04n4k")
+
+[node name="CollisionShape2D39" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=366952769]
+position = Vector2(88.5, 695.625)
+shape = SubResource("RectangleShape2D_8dhb5")
 
 [node name="Player" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1058196070 instance=ExtResource("2_q24mn")]
 position = Vector2(82, 102)
@@ -273,6 +354,10 @@ script = ExtResource("8_roob6")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/WinZone" unique_id=1052358229]
 position = Vector2(1112, 1229)
 shape = SubResource("CircleShape2D_d8523")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="MapPivot/SubViewportContainer/SubViewport" unique_id=1213740713]
+tile_map_data = PackedByteArray("AADY/8j/AAA6ADoAAAC9/7P/AAAoAAYAAADK/7b/AAAQAAQAAADS/7b/AAAQAAQAAADe/77/AAAMABIAAADj/7n/AAAoAAYAAADu/7r/AAAUABIAAAD0/7j/AAAEAAQAAAC2/8L/AAAEAAQAAADD/8P/AAAyAAYAAAC3/9H/AAAoAAYAAADH/9H/AABAAAYAAAC2/+T/AAAEAAQAAADC/+L/AAAQAAQAAADK/93/AAAMABIAAADO/+T/AAAMABIAAADO/93/AAAUABIAAADK/+T/AAAEABIAAAC5//P/AAAoAAYAAADC//b/AAAEAAQAAADS//L/AAAcAAQAAADj//P/AAAxAAYAAADF/8P/AAAxAAYAAADq/8T/AAAMABIAAADu/8X/AABJAAoAAADy/8T/AAAEABIAAAD3/8X/AAAoAAYAAADu/9D/AAAQAAQAAAD6/9D/AAAEABIAAAD8//j/AAAUABIAAADu/+7/AAAQAAQAAADg/+f/AABJAAoAAAA=")
+tile_set = SubResource("TileSet_u7tt4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
 script = ExtResource("6_sjxhf")
@@ -441,6 +526,14 @@ offset_right = 915.0
 offset_bottom = 824.0
 texture_normal = ExtResource("14_hjnkw")
 texture_pressed = ExtResource("16_grv7h")
+
+[node name="Movement" type="Sprite2D" parent="." unique_id=783302274]
+position = Vector2(144, 711)
+texture = ExtResource("24_j0f7u")
+
+[node name="Run" type="Sprite2D" parent="." unique_id=2063526750]
+position = Vector2(151, 974)
+texture = ExtResource("25_n12rl")
 
 [connection signal="timeout" from="CanvasLayer/Timer" to="CanvasLayer" method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/LoseScreen/QuitButton" to="." method="_on_quit_button_pressed"]
