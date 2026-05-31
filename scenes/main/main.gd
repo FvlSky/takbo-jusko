@@ -15,7 +15,16 @@ signal timer_updated(time_left: float, time_elapsed: float)
 @export var game_duration: float = 90.0
 @export var director_check_interval: float = 0.8
 
-const MIN_SPAWN_DISTANCE: float = 400.0
+# ── Spawn tuning ──────────────────────────────────────────────
+## Dog must be at least this far from the player on spawn
+const DOG_MIN_DISTANCE: float = 250.0
+## Dog must be no further than this (keeps it threatening, not off-screen)
+const DOG_MAX_DISTANCE: float = 600.0
+## Dot-product threshold for "toward finish line" cone (0.0 = 90°, 1.0 = exact)
+const DOG_INTERCEPT_DOT: float = 0.25
+## Fraction of the map (from lower-right) that is off-limits for the player spawn
+const FINISH_LINE_EXCLUSION_FACTOR: float = 0.55
+# ─────────────────────────────────────────────────────────────
 
 var time_elapsed: float = 0.0
 var time_left: float = 90.0
@@ -220,26 +229,89 @@ func _get_random_spawns() -> Array:
 		print("ERROR: No walkable tiles found — using fallback spawns")
 		return [Vector2(200, 200), Vector2(1000, 1000)]
 
-	walkable.shuffle()
-
-	var player_spawn := Vector2.ZERO
-	var enemy_spawn  := Vector2.ZERO
-
-	# Pick player spawn first
+	# Pre-compute world positions for every walkable tile (avoids repeated conversion)
+	var world_positions: Array = []
 	for tile in walkable:
-		player_spawn = _tile_to_world(tile)
-		break
+		world_positions.append(_tile_to_world(tile))
 
-	# Pick enemy spawn far enough from player
-	for tile in walkable:
-		var candidate := _tile_to_world(tile)
-		if candidate.distance_to(player_spawn) >= MIN_SPAWN_DISTANCE:
-			enemy_spawn = candidate
-			break
+	# ── Compute map bounds ────────────────────────────────────
+	var min_x: float = world_positions[0].x
+	var max_x: float = world_positions[0].x
+	var min_y: float = world_positions[0].y
+	var max_y: float = world_positions[0].y
+	for pos in world_positions:
+		if pos.x < min_x: min_x = pos.x
+		if pos.x > max_x: max_x = pos.x
+		if pos.y < min_y: min_y = pos.y
+		if pos.y > max_y: max_y = pos.y
 
-	# Fallback if no valid enemy spawn was found
-	if enemy_spawn == Vector2.ZERO:
-		print("WARN: No enemy spawn found at MIN_SPAWN_DISTANCE — using last walkable tile")
-		enemy_spawn = _tile_to_world(walkable.back())
+	# ── Finish-line exclusion zone (lower-right corner) ───────
+	# Any tile inside BOTH thresholds is considered too close to the finish line.
+	var excl_x: float = lerpf(min_x, max_x, 1.0 - FINISH_LINE_EXCLUSION_FACTOR)
+	var excl_y: float = lerpf(min_y, max_y, 1.0 - FINISH_LINE_EXCLUSION_FACTOR)
+
+	# ── Pick player spawn ─────────────────────────────────────
+	var player_indices: Array = []
+	for i in world_positions.size():
+		var pos: Vector2 = world_positions[i]
+		if not (pos.x >= excl_x and pos.y >= excl_y):
+			player_indices.append(i)
+
+	if player_indices.is_empty():
+		# Edge case: the entire map is near the finish line — use everything
+		print("WARN: All tiles are in finish-line zone — relaxing player spawn constraint")
+		for i in world_positions.size():
+			player_indices.append(i)
+
+	player_indices.shuffle()
+	var player_spawn: Vector2 = world_positions[player_indices[0]]
+
+	print("[Spawn] Player -> ", player_spawn, " (finish zone excluded below x=", excl_x, " y=", excl_y, ")")
+
+	# ── Pick dog spawn (intercept position) ───────────────────
+	# The finish line sits at the lower-right corner of the map.
+	# We bias the dog toward tiles that lie between the player and that corner,
+	# so it naturally cuts off the player's escape route.
+	var finish_pos := Vector2(max_x, max_y)
+	var to_finish := (finish_pos - player_spawn).normalized()
+
+	var dog_indices: Array = []
+	for i in world_positions.size():
+		var pos: Vector2 = world_positions[i]
+		var dist: float = pos.distance_to(player_spawn)
+
+		# Must be within the intercept distance band
+		if dist < DOG_MIN_DISTANCE or dist > DOG_MAX_DISTANCE:
+			continue
+
+		# Must be roughly in the direction of the finish line from the player
+		var dir: Vector2 = (pos - player_spawn).normalized()
+		if dir.dot(to_finish) >= DOG_INTERCEPT_DOT:
+			dog_indices.append(i)
+
+	# Fallback 1: relax the directional constraint, keep distance band
+	if dog_indices.is_empty():
+		print("WARN: No intercept tiles found — relaxing direction constraint")
+		for i in world_positions.size():
+			var dist: float = world_positions[i].distance_to(player_spawn)
+			if dist >= DOG_MIN_DISTANCE and dist <= DOG_MAX_DISTANCE:
+				dog_indices.append(i)
+
+	# Fallback 2: relax distance cap too, just enforce minimum
+	if dog_indices.is_empty():
+		print("WARN: No tiles in distance band — using minimum distance only")
+		for i in world_positions.size():
+			if world_positions[i].distance_to(player_spawn) >= DOG_MIN_DISTANCE:
+				dog_indices.append(i)
+
+	# Last resort: nearest tile that isn't the player tile
+	if dog_indices.is_empty():
+		print("WARN: No valid dog spawn found — using last walkable tile")
+		return [player_spawn, world_positions.back()]
+
+	dog_indices.shuffle()
+	var enemy_spawn: Vector2 = world_positions[dog_indices[0]]
+
+	print("[Spawn] Dog   -> ", enemy_spawn, " (dist=", snapped(enemy_spawn.distance_to(player_spawn), 1.0), ")")
 
 	return [player_spawn, enemy_spawn]
