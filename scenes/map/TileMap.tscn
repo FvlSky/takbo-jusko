@@ -1,7 +1,8 @@
 [gd_scene format=4 uid="uid://b83nf8tqmucw6"]
 
-[ext_resource type="Texture2D" uid="uid://bqxfdneyrbxms" path="res://assets/ui/BASE LAYER.png" id="1_elnvl"]
-[ext_resource type="Texture2D" uid="uid://qp66vrxbhw5x" path="res://assets/ui/ASSETS.png" id="2_x25im"]
+[ext_resource type="Texture2D" uid="uid://b6hxnvccjlk3y" path="res://assets/ui/BASE LAYER.png" id="1_elnvl"]
+[ext_resource type="Texture2D" uid="uid://blmcf7uxwcwdu" path="res://assets/ui/ASSETS.png" id="2_x25im"]
+[ext_resource type="Texture2D" uid="uid://cd368iv8nmp4n" path="res://assets/ui/LIGHTING LAYER - TRANSPARENT.png" id="3_pce2p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_elnvl"]
 texture = ExtResource("1_elnvl")
@@ -2982,6 +2983,60 @@ texture = ExtResource("2_x25im")
 49:6/0 = 0
 73:10/size_in_atlas = Vector2i(6, 4)
 73:10/0 = 0
+32:28/size_in_atlas = Vector2i(7, 13)
+32:28/0 = 0
+28:17/size_in_atlas = Vector2i(6, 7)
+28:17/0 = 0
+38:17/size_in_atlas = Vector2i(6, 7)
+38:17/0 = 0
+47:19/size_in_atlas = Vector2i(4, 5)
+47:19/0 = 0
+55:20/size_in_atlas = Vector2i(4, 4)
+55:20/0 = 0
+62:18/size_in_atlas = Vector2i(6, 6)
+62:18/0 = 0
+56:28/size_in_atlas = Vector2i(4, 12)
+56:28/0 = 0
+4:60/size_in_atlas = Vector2i(4, 4)
+4:60/0 = 0
+4:50/size_in_atlas = Vector2i(4, 6)
+4:50/0 = 0
+26:50/size_in_atlas = Vector2i(2, 4)
+26:50/0 = 0
+16:50/size_in_atlas = Vector2i(4, 17)
+16:50/0 = 0
+2:28/size_in_atlas = Vector2i(7, 7)
+2:28/0 = 0
+2:39/size_in_atlas = Vector2i(7, 7)
+2:39/0 = 0
+16:40/size_in_atlas = Vector2i(2, 4)
+16:40/0 = 0
+10:41/size_in_atlas = Vector2i(2, 1)
+10:41/0 = 0
+24:40/size_in_atlas = Vector2i(2, 2)
+24:40/0 = 0
+65:36/size_in_atlas = Vector2i(4, 4)
+65:36/0 = 0
+73:28/size_in_atlas = Vector2i(4, 4)
+73:28/0 = 0
+65:28/size_in_atlas = Vector2i(4, 4)
+65:28/0 = 0
+4:68/size_in_atlas = Vector2i(2, 4)
+4:68/0 = 0
+10:68/size_in_atlas = Vector2i(2, 4)
+10:68/0 = 0
+70:22/size_in_atlas = Vector2i(2, 2)
+70:22/0 = 0
+75:21/size_in_atlas = Vector2i(4, 3)
+75:21/0 = 0
+70:19/0 = 0
+71:19/0 = 0
+14:30/size_in_atlas = Vector2i(2, 4)
+14:30/0 = 0
+20:30/size_in_atlas = Vector2i(2, 2)
+20:30/0 = 0
+26:30/size_in_atlas = Vector2i(2, 2)
+26:30/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_fdgu1"]
 sources/0 = SubResource("TileSetAtlasSource_x25im")
@@ -2996,5 +3051,9 @@ tile_map_data = PackedByteArray("AADZ/9j/BAABAAAAAADZ/9n/BAABAAEAAADZ/9r/BAABAAI
 tile_set = SubResource("TileSet_pce2p")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1486598456]
-tile_map_data = PackedByteArray("AADY/8j/AAA6ADoAAAC9/7P/AAAoAAYAAADK/7b/AAAQAAQAAADS/7b/AAAQAAQAAADe/77/AAAMABIAAADj/7n/AAAoAAYAAADu/7r/AAAUABIAAAD0/7j/AAAEAAQAAAC2/8L/AAAEAAQAAADD/8P/AAAyAAYAAAC3/9H/AAAoAAYAAADH/9H/AABAAAYAAAC2/+T/AAAEAAQAAADC/+L/AAAQAAQAAADK/93/AAAMABIAAADO/+T/AAAMABIAAADO/93/AAAUABIAAADK/+T/AAAEABIAAAC5//P/AAAoAAYAAADC//b/AAAEAAQAAADS//L/AAAcAAQAAADj//P/AAAxAAYAAADF/8P/AAAxAAYAAADq/8T/AAAMABIAAADu/8X/AABJAAoAAADy/8T/AAAEABIAAAD3/8X/AAAoAAYAAADu/9D/AAAQAAQAAAD6/9D/AAAEABIAAAD8//j/AAAUABIAAADu/+7/AAAQAAQAAADg/+f/AABJAAoAAAA=")
+tile_map_data = PackedByteArray("AADY/8j/AAA6ADoAAAC9/7P/AAAoAAYAAADK/7b/AAAQAAQAAADS/7b/AAAQAAQAAADe/77/AAAMABIAAADj/7n/AAAoAAYAAADu/7r/AAAUABIAAAD0/7j/AAAEAAQAAAC2/8L/AAAEAAQAAADD/8P/AAAyAAYAAAC3/9H/AAAoAAYAAADH/9H/AABAAAYAAAC2/+T/AAAEAAQAAADC/+L/AAAQAAQAAADO/+T/AAAMABIAAADK/+T/AAAEABIAAAC5//P/AAAoAAYAAADC//b/AAAEAAQAAADS//L/AAAcAAQAAADj//P/AAAxAAYAAADF/8P/AAAxAAYAAADq/8T/AAAMABIAAADu/8X/AABJAAoAAADy/8T/AAAEABIAAAD3/8X/AAAoAAYAAADu/9D/AAAQAAQAAAD6/9D/AAAEABIAAAD8//j/AAAUABIAAADu/+7/AAAQAAQAAADg/+f/AABJAAoAAADY/9n/AAAgABwAAADO/97/AAAUABIAAADK/97/AAAMABIAAADk/9j/AAAQADIAAADm/9r/AAACABwAAAC8//v/AAACABwAAAD6/7X/AAACACcAAADY/7n/AAACACcAAAC8/9f/AAACACcAAACz/9n/AAACACcAAAD8/+j/AAAcABEAAAD8/+z/AAACACcAAADW/+b/AAA+ABIAAACz/7L/AAAmABEAAAD5//X/AAAmABEAAAC1/9v/AAAQACgAAACz/9r/AAAYACgAAACz/9v/AAAKACkAAAC8/9P/AABJAAoAAAA=")
 tile_set = SubResource("TileSet_fdgu1")
+
+[node name="LightingLayerTransparent" type="Sprite2D" parent="TileMapLayer" unique_id=414229327]
+position = Vector2(-635, -637)
+texture = ExtResource("3_pce2p")

@@ -30,6 +30,7 @@ var time_elapsed: float = 0.0
 var time_left: float = 90.0
 var director_timer: float = 0.0
 var game_over: bool = false
+var game_started: bool = false
 var tilemap: TileMapLayer = null
 
 
@@ -47,18 +48,32 @@ func _ready() -> void:
 	print("chaos engine node: ", chaos_engine)
 	print("chaos engine script: ", chaos_engine.get_script())
 
+	# Freeze player until game starts
+	player.set_physics_process(false)
+
 	# Connect lose screen buttons
-	$CanvasLayer/LoseScreen/RestartButton.pressed.connect(_on_restart_button_pressed)
-	$CanvasLayer/LoseScreen/QuitButton.pressed.connect(_on_quit_button_pressed)
+	var lose_restart = $CanvasLayer/LoseScreen/RestartButton
+	var lose_quit = $CanvasLayer/LoseScreen/QuitButton
+	if not lose_restart.pressed.is_connected(_on_restart_button_pressed):
+		lose_restart.pressed.connect(_on_restart_button_pressed)
+	if not lose_quit.pressed.is_connected(_on_quit_button_pressed):
+		lose_quit.pressed.connect(_on_quit_button_pressed)
 
 	# Connect win screen buttons
-	$CanvasLayer/WinScreen/RestartButton.pressed.connect(_on_restart_button_pressed)
-	$CanvasLayer/WinScreen/QuitButton.pressed.connect(_on_quit_button_pressed)
+	var win_restart = $CanvasLayer/WinScreen/RestartButton
+	var win_quit = $CanvasLayer/WinScreen/QuitButton
+	if not win_restart.pressed.is_connected(_on_restart_button_pressed):
+		win_restart.pressed.connect(_on_restart_button_pressed)
+	if not win_quit.pressed.is_connected(_on_quit_button_pressed):
+		win_quit.pressed.connect(_on_quit_button_pressed)
+
+
 
 	# Skip start screen if restarting
 	if Global.skip_start_screen:
 		start_screen.visible = false
 		Global.skip_start_screen = false
+		start_game()  # start immediately on restart
 
 	# Randomize spawns from walkable tiles
 	var spawns := _get_random_spawns()
@@ -66,8 +81,20 @@ func _ready() -> void:
 	enemy.global_position = spawns[1]
 
 
+func start_game() -> void:
+	game_started = true
+	player.set_physics_process(true)
+	# tell canvas layer to start the timer
+	$CanvasLayer.start_game()
+
+
+func _on_play_button_pressed() -> void:
+	start_screen.visible = false
+	start_game()
+
+
 func _process(delta: float) -> void:
-	if game_over:
+	if game_over or not game_started:
 		return
 
 	time_elapsed += delta
