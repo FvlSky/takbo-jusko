@@ -7,7 +7,6 @@
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1582178649]
 script = ExtResource("1_md0e3")
-move_speed = 165.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1462647752]
 scale = Vector2(2.5, 2.5)
