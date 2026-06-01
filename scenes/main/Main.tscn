@@ -7,21 +7,21 @@
 [ext_resource type="PackedScene" uid="uid://jvgxsxtne8ne" path="res://scenes/player/Player.tscn" id="2_q24mn"]
 [ext_resource type="Script" uid="uid://dnqt6ewq40b4u" path="res://scripts/ai/chaos_engine.gd" id="3_qkm1d"]
 [ext_resource type="PackedScene" uid="uid://sdgd6mj1w8o8" path="res://scenes/enemy.tscn" id="5_dc040"]
-[ext_resource type="Texture2D" uid="uid://liccshdsuevj" path="res://assets/ui/Title.png" id="6_1rhdn"]
+[ext_resource type="Texture2D" uid="uid://dwyibn3khyqus" path="res://assets/ui/Title.png" id="6_1rhdn"]
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
-[ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
+[ext_resource type="Texture2D" uid="uid://b0n8qf0m0jo34" path="res://assets/ui/Time.png" id="8_ko0rf"]
 [ext_resource type="Script" uid="uid://cg2as1d06goyx" path="res://scenes/main/win_zone.gd" id="8_roob6"]
-[ext_resource type="Texture2D" uid="uid://qp66vrxbhw5x" path="res://assets/ui/ASSETS.png" id="9_n12rl"]
+[ext_resource type="Texture2D" uid="uid://c4j4lelysygus" path="res://assets/ui/ASSETS.png" id="9_n12rl"]
 [ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
-[ext_resource type="Texture2D" uid="uid://4oarkareoskn" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
-[ext_resource type="Texture2D" uid="uid://65eyxnyqjdal" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
-[ext_resource type="Texture2D" uid="uid://b2l4tft55ce4s" path="res://assets/ui/STAMINA_TEXT.png" id="12_p5fgu"]
-[ext_resource type="Texture2D" uid="uid://cie1rn8sfev7i" path="res://assets/ui/PAUSE_BUTTON.png" id="13_u8lgh"]
-[ext_resource type="Texture2D" uid="uid://bwjmdm5xjt8b2" path="res://assets/ui/RESTART_BUTTON.png" id="14_hjnkw"]
-[ext_resource type="Texture2D" uid="uid://dpuocqf73vxst" path="res://assets/ui/PAUSE_PRESSED.png" id="14_vc03v"]
-[ext_resource type="Texture2D" uid="uid://6wg5ewbw8rpo" path="res://assets/ui/QUIT_BUTTON.png" id="15_rikml"]
-[ext_resource type="Texture2D" uid="uid://d3kufap5dfmmg" path="res://assets/ui/RESTART_PRESSED.png" id="16_grv7h"]
-[ext_resource type="Texture2D" uid="uid://boh2gbkydd218" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
+[ext_resource type="Texture2D" uid="uid://b3a1lkj4hirk2" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
+[ext_resource type="Texture2D" uid="uid://rm6hnmlv45vv" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
+[ext_resource type="Texture2D" uid="uid://dms03mmaja2tk" path="res://assets/ui/STAMINA_TEXT.png" id="12_p5fgu"]
+[ext_resource type="Texture2D" uid="uid://bragy8nbu6so1" path="res://assets/ui/PAUSE_BUTTON.png" id="13_u8lgh"]
+[ext_resource type="Texture2D" uid="uid://cmgj3uoq8o48i" path="res://assets/ui/RESTART_BUTTON.png" id="14_hjnkw"]
+[ext_resource type="Texture2D" uid="uid://262hhsj3ti37" path="res://assets/ui/PAUSE_PRESSED.png" id="14_vc03v"]
+[ext_resource type="Texture2D" uid="uid://bni6ra2d5bc6" path="res://assets/ui/QUIT_BUTTON.png" id="15_rikml"]
+[ext_resource type="Texture2D" uid="uid://bnmo4fwdq0pvs" path="res://assets/ui/RESTART_PRESSED.png" id="16_grv7h"]
+[ext_resource type="Texture2D" uid="uid://crnbltp56woip" path="res://assets/ui/QUIT_PRESSED.png" id="18_yub1f"]
 [ext_resource type="Texture2D" uid="uid://cy586nn8mqjb1" path="res://assets/ui/Lose Pop Up.png" id="21_yub1f"]
 [ext_resource type="Texture2D" uid="uid://fg8g5003lpph" path="res://assets/ui/Win Pop Up.png" id="22_d8523"]
 [ext_resource type="Texture2D" uid="uid://coocwgvvqiyu0" path="res://assets/ui/Movement.png" id="24_j0f7u"]
@@ -78,9 +78,6 @@ b = Vector2(0, 1280)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkm1d"]
 size = Vector2(27.5, 49.734375)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_n12rl"]
-size = Vector2(5.75, 72.86719)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0cxqb"]
 size = Vector2(247.5, 33.1875)
@@ -297,10 +294,6 @@ shape = SubResource("RectangleShape2D_qkm1d")
 position = Vector2(1222.25, 932.8672)
 shape = SubResource("RectangleShape2D_qkm1d")
 
-[node name="CollisionShape2D41" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=908006726]
-position = Vector2(1174, 69)
-shape = SubResource("RectangleShape2D_n12rl")
-
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="MapPivot/SubViewportContainer/SubViewport/CollisionShapes" unique_id=1373967359]
 position = Vector2(450, 554.625)
 shape = SubResource("RectangleShape2D_gyg6b")
@@ -430,6 +423,7 @@ texture_normal = ExtResource("15_rikml")
 texture_pressed = ExtResource("18_yub1f")
 
 [node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
+visible = false
 
 [node name="LoseScreen" type="Control" parent="CanvasLayer" unique_id=261953009]
 visible = false
