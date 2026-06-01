@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ca10wbpdbk6w5" path="res://scripts/player/player.gd" id="1_gfjak"]
 [ext_resource type="Texture2D" uid="uid://cogjve7tkhyyt" path="res://assets/sprites/Female1.png" id="2_gfjak"]
+[ext_resource type="Script" uid="uid://7tsdkkyi7qfm" path="res://scripts/hud/highlight_ring.gd" id="3_4kuee"]
 
 [sub_resource type="Animation" id="Animation_gfjak"]
 resource_name = "Back_Idle"
@@ -317,6 +318,11 @@ advance_expression_base_node = NodePath("../AnimationPlayer")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(0.0034083128, 0.67452836)
 parameters/Run/blend_position = Vector2(0.20172203, -0.3915094)
+
+[node name="Highlight" type="Node2D" parent="." unique_id=1404537732]
+position = Vector2(0, 10)
+script = ExtResource("3_4kuee")
+radius = 23.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1975812648]
 scale = Vector2(1.5, 1.5)
