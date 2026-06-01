@@ -31,6 +31,12 @@ var last_direction: Vector2 = Vector2.DOWN
 var _map_node: Node2D = null
 
 # ──────────────────────────────────────────────────────────────
+#  ANIMATION TREE
+# ──────────────────────────────────────────────────────────────
+@onready var animation_tree: AnimationTree = $AnimationTree
+var _anim_playback: AnimationNodeStateMachinePlayback
+
+# ──────────────────────────────────────────────────────────────
 #  SPRINT STREAK TRACKING
 # ──────────────────────────────────────────────────────────────
 var _sprint_streak    : int   = 0
@@ -50,7 +56,7 @@ const _PANIC_THRESHOLD : int   = 3
 const _PANIC_TURN_DOT  : float = 0.30
 
 # ──────────────────────────────────────────────────────────────
-#  CAUGHT FLAG — prevents trigger_lose from firing multiple times
+#  CAUGHT FLAG
 # ──────────────────────────────────────────────────────────────
 var _is_caught: bool = false
 
@@ -59,7 +65,6 @@ func _ready() -> void:
 	add_to_group("player")
 
 	_map_node = get_tree().current_scene.get_node_or_null("MapPivot") as Node2D
-
 	if _map_node == null:
 		print("ERROR: MapPivot not found")
 	else:
@@ -67,6 +72,10 @@ func _ready() -> void:
 
 	current_stamina = max_stamina
 	stamina_changed.emit(current_stamina, max_stamina)
+
+	# ── Animation Tree ────────────────────────────────────────
+	animation_tree.active = true
+	_anim_playback = animation_tree["parameters/playback"]
 
 	# ── Connect Hitbox ────────────────────────────────────────
 	var hitbox := get_node_or_null("Hitbox") as Area2D
@@ -99,6 +108,7 @@ func _physics_process(delta: float) -> void:
 	update_sprint_state(input_direction)
 	update_stamina(delta)
 	move_player(input_direction)
+	update_animation(input_direction)
 
 	# ── Sprint streak ──────────────────────────────────────────
 	if is_sprinting and not _was_sprinting:
@@ -136,7 +146,23 @@ func _physics_process(delta: float) -> void:
 
 
 # ──────────────────────────────────────────────────────────────
-#  HELPER: notify the dog without crashing if the node is missing
+#  ANIMATION
+# ──────────────────────────────────────────────────────────────
+func update_animation(input_direction: Vector2) -> void:
+	if input_direction != Vector2.ZERO:
+		# Moving — use Run state
+		_anim_playback.travel("Run")
+		animation_tree["parameters/Run/blend_position"] = input_direction
+		# Keep idle blend position in sync with last direction
+		animation_tree["parameters/Idle/blend_position"] = input_direction
+	else:
+		# Stopped — use Idle state, keep facing last direction
+		_anim_playback.travel("Idle")
+		animation_tree["parameters/Idle/blend_position"] = last_direction
+
+
+# ──────────────────────────────────────────────────────────────
+#  HELPER
 # ──────────────────────────────────────────────────────────────
 func _notify_dog(method: String, args: Array) -> void:
 	var dog = get_tree().get_first_node_in_group("dog")
@@ -262,9 +288,14 @@ func reset_player_state(spawn_position: Vector2) -> void:
 	current_stamina = max_stamina
 	is_sprinting    = false
 	is_exhausted    = false
-	_is_caught       = false  # reset caught state on restart
+	_is_caught      = false
 	last_direction  = Vector2.DOWN
 
 	stamina_changed.emit(current_stamina, max_stamina)
 	sprint_state_changed.emit(is_sprinting)
 	player_exhausted.emit(is_exhausted)
+
+	# Reset animation to idle facing down
+	if _anim_playback:
+		_anim_playback.travel("Idle")
+		animation_tree["parameters/Idle/blend_position"] = Vector2.DOWN
