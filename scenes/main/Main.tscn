@@ -423,7 +423,6 @@ texture_normal = ExtResource("15_rikml")
 texture_pressed = ExtResource("18_yub1f")
 
 [node name="StartScreen" parent="CanvasLayer" unique_id=510625142 instance=ExtResource("9_ostsq")]
-visible = false
 
 [node name="LoseScreen" type="Control" parent="CanvasLayer" unique_id=261953009]
 visible = false
