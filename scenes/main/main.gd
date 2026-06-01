@@ -37,6 +37,10 @@ var tilemap: TileMapLayer = null
 func _ready() -> void:
 	add_to_group("game_manager")
 
+	time_left = game_duration
+	time_elapsed = 0.0
+	timer_updated.emit(time_left, time_elapsed)
+
 	tilemap = get_tree().get_first_node_in_group("ground_layer")
 
 	print("map node: ", map)
@@ -67,8 +71,6 @@ func _ready() -> void:
 	if not win_quit.pressed.is_connected(_on_quit_button_pressed):
 		win_quit.pressed.connect(_on_quit_button_pressed)
 
-
-
 	# Skip start screen if restarting
 	if Global.skip_start_screen:
 		start_screen.visible = false
@@ -83,8 +85,14 @@ func _ready() -> void:
 
 func start_game() -> void:
 	game_started = true
+	time_elapsed = 0.0
+	time_left = game_duration
+	timer_updated.emit(time_left, time_elapsed)
+
 	player.set_physics_process(true)
-	# tell canvas layer to start the timer
+
+	# CanvasLayer no longer owns the timer.
+	# This call is kept so existing UI/start flow still works.
 	$CanvasLayer.start_game()
 
 
@@ -94,6 +102,9 @@ func _on_play_button_pressed() -> void:
 
 
 func _process(delta: float) -> void:
+	if get_tree().paused:
+		return
+
 	if game_over or not game_started:
 		return
 

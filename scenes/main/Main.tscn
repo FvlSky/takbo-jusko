@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://bcxbm00dfauqh" path="res://scenes/main/canvas_layer.gd" id="6_sjxhf"]
 [ext_resource type="Texture2D" uid="uid://dx8kqao3o60hd" path="res://assets/ui/Time.png" id="8_ko0rf"]
 [ext_resource type="Script" uid="uid://cg2as1d06goyx" path="res://scenes/main/win_zone.gd" id="8_roob6"]
-[ext_resource type="Texture2D" uid="uid://blmcf7uxwcwdu" path="res://assets/ui/ASSETS.png" id="9_n12rl"]
+[ext_resource type="Texture2D" uid="uid://qp66vrxbhw5x" path="res://assets/ui/ASSETS.png" id="9_n12rl"]
 [ext_resource type="PackedScene" uid="uid://be1lnls827m0d" path="res://scenes/StartScreen.tscn" id="9_ostsq"]
 [ext_resource type="Texture2D" uid="uid://4oarkareoskn" path="res://assets/ui/OBJECTIVE.png" id="10_2tpxt"]
 [ext_resource type="Texture2D" uid="uid://65eyxnyqjdal" path="res://assets/ui/STAMINABAR.png" id="11_qkm1d"]
@@ -360,6 +360,7 @@ tile_map_data = PackedByteArray("AADY/8j/AAA6ADoAAAC9/7P/AAAoAAYAAADK/7b/AAAQAAQ
 tile_set = SubResource("TileSet_u7tt4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2132499009]
+process_mode = 3
 script = ExtResource("6_sjxhf")
 
 [node name="Title" type="Sprite2D" parent="CanvasLayer" unique_id=73451924]
@@ -402,6 +403,7 @@ position = Vector2(112, 443)
 texture = ExtResource("12_p5fgu")
 
 [node name="PauseButton" type="TextureButton" parent="CanvasLayer" unique_id=870613883]
+process_mode = 3
 offset_left = 1599.0
 offset_top = 42.0
 offset_right = 1856.0
@@ -410,6 +412,7 @@ texture_normal = ExtResource("13_u8lgh")
 texture_pressed = ExtResource("14_vc03v")
 
 [node name="RestartButton" type="TextureButton" parent="CanvasLayer" unique_id=595330857]
+process_mode = 3
 offset_left = 1599.0
 offset_top = 163.0
 offset_right = 1856.0
@@ -418,6 +421,7 @@ texture_normal = ExtResource("14_hjnkw")
 texture_pressed = ExtResource("16_grv7h")
 
 [node name="QuitButton" type="TextureButton" parent="CanvasLayer" unique_id=40924826]
+process_mode = 3
 offset_left = 1599.0
 offset_top = 283.0
 offset_right = 1856.0
