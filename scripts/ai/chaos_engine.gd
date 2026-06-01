@@ -16,9 +16,7 @@ signal chaos_decision_made(
 	random_value: float
 )
 
-# =============
 # Tuning Values
-# =============
 
 @export var t_min: float = 0.55
 @export var t_max: float = 1.20
@@ -36,9 +34,8 @@ signal chaos_decision_made(
 @export var safety_weight: float = 0.30
 @export var stamina_weight: float = 0.20
 
-# ============
+
 # State Values
-# ============
 
 var chaos_score: float = 0.0
 var temperature: float = 0.80
@@ -56,10 +53,9 @@ func _ready() -> void:
 	temperature = initial_temperature
 
 
-# ==================================================
+# ─────────────
 # Chaos context
-# Computes Chaos Score and maps it to temperature T
-# ==================================================
+# ─────────────
 
 func update_context(
 	distance_to_dog: float,
@@ -123,10 +119,10 @@ func map_chaos_score_to_temperature(score: float) -> float:
 	return clamped_temperature
 
 
-# =============================
+# ────────────────────────────
 # Simulated Annealing decision
 # Applies P = e^(-ΔE / T)
-# =============================
+# ────────────────────────────
 
 func evaluate_effect(proposed_effect: String) -> Dictionary:
 	var delta_e: float = get_delta_e(proposed_effect)
@@ -192,10 +188,9 @@ func evaluate_effect(proposed_effect: String) -> Dictionary:
 	return result
 
 
-# ============================================================
+# ─────────────────
 # Temperature Decay
-# T decay is tied to player performance through Chaos Score
-# ============================================================
+# ─────────────────
 
 func apply_temperature_decay() -> void:
 	var performance_ratio: float = clamp(
@@ -214,9 +209,7 @@ func apply_temperature_decay() -> void:
 	temperature = clamp(temperature, t_min, t_max)
 
 
-# ===============
-# delta e lookup
-# ===============
+# Delta e lookup
 
 func get_delta_e(effect_name: String) -> float:
 	if delta_e_values.has(effect_name):
@@ -225,9 +218,7 @@ func get_delta_e(effect_name: String) -> float:
 	return 0.0
 
 
-# ===============
-# public getters
-# ===============
+# Public getters
 
 func get_chaos_score() -> float:
 	return chaos_score

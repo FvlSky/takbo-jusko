@@ -1,7 +1,7 @@
 extends Node
-# =======================================
+# ──────────────────────────────────────
 # Director AI — Rule-Based Decision Tree
-# =======================================
+# ──────────────────────────────────────
 signal director_decision_made(
 	current_state: String,
 	selected_rule: String,
@@ -10,9 +10,9 @@ signal director_decision_made(
 	stamina_ratio: float,
 	time_elapsed: float
 )
-# --------------
-# TUNING VALUES
-# --------------
+
+# Tuning Values
+
 @export var danger_distance: float = 120.0
 @export var close_distance: float = 220.0
 @export var safe_distance: float = 150.0        # lowered from 280
@@ -22,9 +22,9 @@ signal director_decision_made(
 @export var late_game_time: float = 60.0
 @export var effect_cooldown_duration: float = 2.0  # seconds between major effects
 
-# -------------
-# OUTPUT STATE
-# -------------
+
+# Output State
+
 var current_state: String = "idle"
 var selected_rule: String = "none"
 var selected_effect: String = "none"
@@ -103,9 +103,9 @@ func evaluate(distance_to_dog: float, stamina_ratio: float, time_elapsed: float)
 
 	return decision
 
-# =============================
-# CONDITION-CHECKING FUNCTIONS
-# =============================
+
+# Condition-checking Functions
+
 func is_danger_close(distance_to_dog: float) -> bool:
 	return distance_to_dog <= danger_distance
 
@@ -130,18 +130,18 @@ func is_mid_game(time_elapsed: float) -> bool:
 func is_late_game(time_elapsed: float) -> bool:
 	return time_elapsed >= late_game_time
 
-# ================================
-# COOLDOWN HELPER
-# ================================
+
+# Cooldown Helper
+
 func _with_cooldown(effect: String) -> String:
 	if effect_cooldown > 0.0:
 		return "none"  # still cooling down, skip this effect
 	effect_cooldown = effect_cooldown_duration
 	return effect
 
-# ================================
-# GETTERS FOR DEBUG OVERLAY / HUD
-# ================================
+
+# Getters for debug overlay / HUD
+
 func get_current_state() -> String:
 	return current_state
 
