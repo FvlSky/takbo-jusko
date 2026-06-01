@@ -2,11 +2,21 @@
 
 [ext_resource type="Script" uid="uid://cx6fhu0halxri" path="res://scripts/enemy/dog.gd" id="1_md0e3"]
 [ext_resource type="Texture2D" uid="uid://b5s0prbqnwvfp" path="res://assets/sprites/dog.png" id="2_4ra3w"]
+[ext_resource type="Script" uid="uid://7tsdkkyi7qfm" path="res://scripts/hud/highlight_ring.gd" id="2_5uy6h"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_md0e3"]
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1582178649]
 script = ExtResource("1_md0e3")
+
+[node name="Highlight" type="Node2D" parent="." unique_id=884180442]
+script = ExtResource("2_5uy6h")
+radius = 23.0
+fill_color = Color(1, 0, 0, 0.6509804)
+glow_color = Color(1, 0, 0, 0.3019608)
+border_color = Color(1, 0.14901961, 0.14901961, 1)
+pulse_speed = 5.0
+pulse_strength = 0.18
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1462647752]
 scale = Vector2(2.5, 2.5)
